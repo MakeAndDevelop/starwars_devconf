@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ui/features/home/home_page.dart';
+import 'features/films/films.dart';
 import 'ui/theme/theme.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
-      home: HomePage(),
+      home: const FilmPage(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../ui.dart';
-import 'widgets/header_background_image.dart';
+import '../../../ui/ui.dart';
+import '../films.dart';
 
 class FilmPage extends StatefulWidget {
   const FilmPage({Key? key}) : super(key: key);

@@ -57,8 +57,8 @@ class _HeaderBackgroundImageWidgetState extends State<HeaderBackgroundImageWidge
             child: Container(
               alignment: Alignment.center,
               color: Colors.grey.withOpacity(0.1),
-              child: Text(
-                "CHOCOLATE",
+              child: const Text(
+                'CHOCOLATE',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
