@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../ui/ui.dart';
 import '../films.dart';
 
-class FilmPage extends StatefulWidget {
-  const FilmPage({Key? key}) : super(key: key);
+class FilmDetailsPage extends StatefulWidget {
+  final Film film;
+
+  const FilmDetailsPage({Key? key, required this.film}) : super(key: key);
 
   @override
-  State<FilmPage> createState() => _FilmPageState();
+  State<FilmDetailsPage> createState() => _FilmDetailsPageState();
 }
 
-class _FilmPageState extends State<FilmPage> {
+class _FilmDetailsPageState extends State<FilmDetailsPage> {
   final ScrollController _scrollController = ScrollController();
 
   @override

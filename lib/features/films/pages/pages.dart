@@ -1,1 +1,1 @@
-export 'film_page.dart';
+export 'film_details_page.dart';

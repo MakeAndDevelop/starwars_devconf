@@ -1,8 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'film_dto.g.dart';
-
-@JsonSerializable()
 class FilmDto {
   final String title;
   final int episodeId;
@@ -36,6 +31,37 @@ class FilmDto {
     required this.url,
   });
 
-  factory FilmDto.fromJson(Map<String, dynamic> json) => _$FilmDtoFromJson(json);
-  Map<String, dynamic> toJson() => _$FilmDtoToJson(this);
+  factory FilmDto.fromJson(Map<String, dynamic> json) => FilmDto(
+        title: json['title'] as String,
+        episodeId: json['episode_id'] as int,
+        openingCrawl: json['opening_crawl'] as String,
+        director: json['director'] as String,
+        producer: json['producer'] as String,
+        releaseDate: DateTime.parse(json['release_date'] as String),
+        characters: (json['characters'] as List<dynamic>).map((e) => e as String).toList(),
+        planets: (json['planets'] as List<dynamic>).map((e) => e as String).toList(),
+        starships: (json['starships'] as List<dynamic>).map((e) => e as String).toList(),
+        vehicles: (json['vehicles'] as List<dynamic>).map((e) => e as String).toList(),
+        species: (json['species'] as List<dynamic>).map((e) => e as String).toList(),
+        created: DateTime.parse(json['created'] as String),
+        edited: DateTime.parse(json['edited'] as String),
+        url: json['url'] as String,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'title': title,
+        'episode_id': episodeId,
+        'opening_crawl': openingCrawl,
+        'director': director,
+        'producer': producer,
+        'release_date': releaseDate.toIso8601String(),
+        'characters': characters,
+        'planets': planets,
+        'starships': starships,
+        'vehicles': vehicles,
+        'species': species,
+        'created': created.toIso8601String(),
+        'edited': edited.toIso8601String(),
+        'url': url,
+      };
 }

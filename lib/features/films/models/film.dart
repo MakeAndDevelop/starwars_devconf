@@ -1,4 +1,5 @@
-abstract class Film {
+class Film {
+  final String id;
   final String title;
   final int episodeId;
   final String openingCrawl;
@@ -7,6 +8,7 @@ abstract class Film {
   final DateTime releaseDate;
 
   Film({
+    required this.id,
     required this.title,
     required this.episodeId,
     required this.openingCrawl,

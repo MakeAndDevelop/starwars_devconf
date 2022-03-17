@@ -5,14 +5,14 @@ import 'film_dto.dart';
 part 'film_response.g.dart';
 
 @JsonSerializable()
-abstract class SwapiFilmsDto {
+class FilmResponse {
   final int count;
   final List<FilmDto> results;
 
-  const SwapiFilmsDto({
+  const FilmResponse({
     required this.count,
     required this.results,
   });
 
-  factory SwapiFilmsDto.fromJson(Map<String, dynamic> json) => _$SwapiFilmsDtoFromJson(json);
+  factory FilmResponse.fromJson(Map<String, dynamic> json) => _$FilmResponseFromJson(json);
 }

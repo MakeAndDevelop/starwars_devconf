@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'features/films/films.dart';
+import 'bloc_providers.dart';
+import 'features/films/pages/films_page.dart';
+import 'ioc.dart';
 import 'ui/theme/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  configureDependencies();
+  runApp(const StarWarsApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class StarWarsApp extends StatelessWidget {
+  const StarWarsApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.lightTheme,
-      home: const FilmPage(),
+    return MultiBlocProvider(
+      providers: BlocProviders.globalProviders,
+      child: MaterialApp(
+        title: 'Star Wars Demo',
+        theme: AppTheme.lightTheme,
+        home: const FilmsPage(),
+      ),
     );
   }
 }

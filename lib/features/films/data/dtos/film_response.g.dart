@@ -6,12 +6,12 @@ part of 'film_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SwapiFilmsDto _$SwapiFilmsDtoFromJson(Map<String, dynamic> json) => SwapiFilmsDto(
+FilmResponse _$FilmResponseFromJson(Map<String, dynamic> json) => FilmResponse(
       count: json['count'] as int,
       results: (json['results'] as List<dynamic>).map((e) => FilmDto.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
-Map<String, dynamic> _$SwapiFilmsDtoToJson(SwapiFilmsDto instance) => <String, dynamic>{
+Map<String, dynamic> _$FilmResponseToJson(FilmResponse instance) => <String, dynamic>{
       'count': instance.count,
-      'results': instance.results,
+      'results': instance.results.map((e) => e.toJson()).toList(),
     };
