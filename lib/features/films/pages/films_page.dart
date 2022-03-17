@@ -11,6 +11,9 @@ class FilmsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Star Wars Episodes'),
+      ),
       body: BlocConsumer<FilmsCubit, FilmsState>(
         listener: (context, state) {
           if (state is FilmSelectedState) {

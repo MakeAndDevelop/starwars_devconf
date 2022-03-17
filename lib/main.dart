@@ -21,6 +21,7 @@ class StarWarsApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Star Wars Demo',
         theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         home: const FilmsPage(),
       ),
     );

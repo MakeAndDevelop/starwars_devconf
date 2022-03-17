@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 
 class HeaderBackgroundImageWidget extends StatefulWidget {
   final ScrollController scrollController;
+  final String imageUrl;
+
   const HeaderBackgroundImageWidget({
     Key? key,
     required this.scrollController,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -44,23 +47,21 @@ class _HeaderBackgroundImageWidgetState extends State<HeaderBackgroundImageWidge
       child: Container(
         height: 380,
         width: double.maxFinite,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage('https://starwars-visualguide.com/assets/img/films/1.jpg'),
-              fit: BoxFit.fitWidth,
-              opacity: 0.6),
+            image: NetworkImage(widget.imageUrl),
+            fit: BoxFit.fitWidth,
+            opacity: 0.6,
+          ),
         ),
         child: ClipRRect(
           // make sure we apply clip it properly
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: Container(
               alignment: Alignment.center,
-              color: Colors.grey.withOpacity(0.1),
-              child: const Text(
-                'CHOCOLATE',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
+              color: Colors.white.withOpacity(0.1),
+              child: SizedBox(),
             ),
           ),
         ),

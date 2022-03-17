@@ -16,6 +16,11 @@ class FilmMapper implements Mapper<FilmDto, Film> {
       producer: source.producer,
       episodeId: source.episodeId,
       title: source.title,
+      characters: source.characters
+          .map(
+            (c) => c.replaceAll(Endpoints.people, '').replaceAll('/', ''),
+          )
+          .toList(),
     );
   }
 

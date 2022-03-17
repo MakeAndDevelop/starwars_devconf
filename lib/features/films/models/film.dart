@@ -6,6 +6,7 @@ class Film {
   final String director;
   final String producer;
   final DateTime releaseDate;
+  final List<String> characters;
 
   Film({
     required this.id,
@@ -15,5 +16,6 @@ class Film {
     required this.director,
     required this.producer,
     required this.releaseDate,
+    required this.characters,
   });
 }
