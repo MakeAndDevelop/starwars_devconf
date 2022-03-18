@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:starwars_devconf/features/films/widgets/film_characters.dart';
+import 'package:intl/intl.dart';
 
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/widgets/fade_in_switcher.dart';
 import '../../features.dart';
-import '../models/film.dart';
+import '../widgets/film_characters.dart';
 import '../widgets/film_header_image.dart';
 import '../widgets/opening_crawl.dart';
+import 'description_item.dart';
 
 class FilmDetailsPage extends StatefulWidget {
   final Film film;
@@ -21,18 +23,24 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
   final ScrollController _scrollController = ScrollController();
   final ScrollController _openingCrawlController = ScrollController();
   String get _imageUrl => 'https://starwars-visualguide.com/assets/img/films/${widget.film.id}.jpg';
+  bool showFilmPoster = false;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _scrollOpeningCrawl() {
-    _openingCrawlController.animateTo(
+  Future<void> _scrollOpeningCrawl() async {
+    await _openingCrawlController.animateTo(
       _openingCrawlController.position.maxScrollExtent,
       duration: const Duration(seconds: 10),
       curve: Curves.linear,
     );
+    if (mounted) {
+      setState(() {
+        showFilmPoster = true;
+      });
+    }
   }
 
   @override
@@ -52,39 +60,7 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _openingCrawl(),
-                Flexible(
-                  child: Card(
-                    elevation: 8,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                      side: BorderSide(
-                        color: Theme.of(context).backgroundColor,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: Insets.all16,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          FilmCharacters(
-                            characters: widget.film.characters,
-                          ),
-                          Spacing.height16,
-                          _director(),
-                          const SizedBox(
-                            height: 800,
-                            width: double.infinity,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                _content(context),
               ],
             ),
           ),
@@ -93,18 +69,76 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
     );
   }
 
-  Row _director() {
-    return Row(
-      children: [
-        Spacing.width8,
-        const Flexible(
-          child: Text('Director:'),
+  Flexible _content(BuildContext context) {
+    return Flexible(
+      child: Card(
+        elevation: 8,
+        color: context.theme.backgroundColor,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          side: BorderSide(
+            width: 0.5,
+          ),
         ),
-        Spacing.width8,
-        Expanded(
-          child: Text(widget.film.director),
+        child: Padding(
+          padding: Insets.all16,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.film.title,
+                style: context.textTheme.headline4?.copyWith(color: ThemeColors.yellow),
+              ),
+              const Divider(),
+              DescriptionItem(label: 'Director:', value: widget.film.director),
+              Spacing.height4,
+              DescriptionItem(label: 'Producer:', value: widget.film.producer),
+              Spacing.height4,
+              DescriptionItem(label: 'Release date:', value: DateFormat.yMd().format(widget.film.releaseDate)),
+              const Divider(),
+              Text(
+                'Starships:',
+                style: context.textTheme.headline6,
+              ),
+              FilmSubItems(
+                items: widget.film.starships,
+                urlPrefix: 'starships',
+              ),
+              const Divider(),
+              Text(
+                'Characters:',
+                style: context.textTheme.headline6,
+              ),
+              FilmSubItems(
+                items: widget.film.characters,
+                urlPrefix: 'characters',
+              ),
+              const Divider(),
+              Text(
+                'Planets:',
+                style: context.textTheme.headline6,
+              ),
+              FilmSubItems(
+                items: widget.film.planets,
+                urlPrefix: 'planets',
+              ),
+              const Divider(),
+              Text(
+                'Species:',
+                style: context.textTheme.headline6,
+              ),
+              FilmSubItems(
+                items: widget.film.species,
+                urlPrefix: 'species',
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 
@@ -115,16 +149,25 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
       alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _openingCrawlController,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              OpeningCrawl(openingCrawl: widget.film.openingCrawl),
-              FilmHeaderImage(imageUrl: _imageUrl),
-            ],
-          ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _openingCrawlController,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  OpeningCrawl(openingCrawl: widget.film.openingCrawl),
+                ],
+              ),
+            ),
+            Center(
+              child: FadeInSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: showFilmPoster ? FilmHeaderImage(imageUrl: _imageUrl) : const SizedBox(),
+              ),
+            ),
+          ],
         ),
       ),
     );

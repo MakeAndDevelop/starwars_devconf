@@ -22,9 +22,7 @@ class FilmsPage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is FilmsLoadedState) {
-            return FilmList(
-              films: state.films,
-            );
+            return _body(state);
           }
           return const Center(
             child: Text('Loading'),
@@ -32,6 +30,30 @@ class FilmsPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _body(FilmsLoadedState state) {
+    return Column(
+      children: [
+        Expanded(
+            flex: 9,
+            child: FilmList(
+              films: state.films,
+            )),
+        const Flexible(
+          child: Padding(
+            padding: Insets.all16,
+            child: Text(
+              'Powered by SWAPI',
+              style: TextStyle(color: ThemeColors.yellow),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
+    );
+
+    ;
   }
 
   Future<void> openFilmDetails(BuildContext context, FilmSelectedState state) async {

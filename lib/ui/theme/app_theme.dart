@@ -28,6 +28,9 @@ class AppTheme {
           foregroundColor: ThemeColors.black,
           elevation: 0,
         ),
+        dividerTheme: const DividerThemeData(
+          space: Insets.inset32,
+        ),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -56,6 +59,9 @@ class AppTheme {
           backgroundColor: Colors.transparent,
           foregroundColor: ThemeColors.yellow,
           elevation: 0,
+        ),
+        dividerTheme: const DividerThemeData(
+          space: Insets.inset32,
         ),
       );
 }
