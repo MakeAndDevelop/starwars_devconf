@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
 import '../../features.dart';
+import '../widgets/film_list.dart';
 
 class FilmsPage extends StatelessWidget {
   const FilmsPage({Key? key}) : super(key: key);
@@ -17,18 +18,36 @@ class FilmsPage extends StatelessWidget {
       body: BlocConsumer<FilmsCubit, FilmsState>(
         listener: (context, state) {
           if (state is FilmSelectedState) {
-            openFilmDetails(context, state);
+            _openFilmDetails(context, state);
           }
         },
+        buildWhen: (currentState, newState) => currentState != newState,
         builder: (context, state) {
           if (state is FilmsLoadedState) {
             return _body(state);
           }
-          return const Center(
-            child: Text('Loading'),
-          );
+          return _loading(context);
         },
       ),
+    );
+  }
+
+  Column _loading(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.rocket_launch,
+          color: context.theme.primaryColor,
+        ),
+        Spacing.height16,
+        Text(
+          'Loading...',
+          style: TextStyle(
+            color: context.theme.primaryColor,
+          ),
+        ),
+      ],
     );
   }
 
@@ -36,10 +55,9 @@ class FilmsPage extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-            flex: 9,
-            child: FilmList(
-              films: state.films,
-            )),
+          flex: 9,
+          child: FilmList(films: state.films),
+        ),
         const Flexible(
           child: Padding(
             padding: Insets.all16,
@@ -52,74 +70,17 @@ class FilmsPage extends StatelessWidget {
         ),
       ],
     );
-
-    ;
   }
 
-  Future<void> openFilmDetails(BuildContext context, FilmSelectedState state) async {
+  Future<void> _openFilmDetails(
+    BuildContext context,
+    FilmSelectedState state,
+  ) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (settings) => FilmDetailsPage(
           film: state.selectedFilm,
-        ),
-      ),
-    );
-  }
-}
-
-class FilmList extends StatelessWidget {
-  final List<Film> films;
-
-  const FilmList({Key? key, required this.films}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: Insets.all16,
-      child: ListView.builder(
-        itemCount: films.length,
-        itemBuilder: (context, index) => FilmListItem(
-          film: films[index],
-        ),
-      ),
-    );
-  }
-}
-
-class FilmListItem extends StatelessWidget {
-  final Film film;
-
-  const FilmListItem({Key? key, required this.film}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: Insets.vertical8,
-      child: Card(
-        child: InkWell(
-          onTap: () => BlocProvider.of<FilmsCubit>(context).selectFilm(film.episodeId),
-          child: Row(
-            children: [
-              Image.network(
-                'https://starwars-visualguide.com/assets/img/films/${film.id}.jpg',
-                width: 80,
-                height: 80,
-                alignment: Alignment.topCenter,
-                fit: BoxFit.fitWidth,
-              ),
-              Spacing.width8,
-              Expanded(
-                child: Text(film.title),
-              ),
-              Spacing.width8,
-              Text(
-                '${film.episodeId}',
-                style: const TextStyle(fontSize: 20),
-              ),
-              Spacing.width24,
-            ],
-          ),
         ),
       ),
     );

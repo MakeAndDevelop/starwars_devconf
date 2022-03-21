@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../common/enums/star_wars_entity.dart';
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/utils/image_utils.dart';
 import '../../../ui/widgets/fade_in_switcher.dart';
 import '../../features.dart';
 import '../widgets/film_characters.dart';
@@ -22,7 +24,7 @@ class FilmDetailsPage extends StatefulWidget {
 class _FilmDetailsPageState extends State<FilmDetailsPage> {
   final ScrollController _scrollController = ScrollController();
   final ScrollController _openingCrawlController = ScrollController();
-  String get _imageUrl => 'https://starwars-visualguide.com/assets/img/films/${widget.film.id}.jpg';
+  String get _imageUrl => ImageUtility.film(widget.film.id);
   bool showFilmPoster = false;
 
   @override
@@ -104,36 +106,36 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
                 'Starships:',
                 style: context.textTheme.headline6,
               ),
-              FilmSubItems(
+              HorizontalImageList(
                 items: widget.film.starships,
-                urlPrefix: 'starships',
+                type: StarWarsType.starship,
               ),
               const Divider(),
               Text(
                 'Characters:',
                 style: context.textTheme.headline6,
               ),
-              FilmSubItems(
+              HorizontalImageList(
                 items: widget.film.characters,
-                urlPrefix: 'characters',
+                type: StarWarsType.character,
               ),
               const Divider(),
               Text(
                 'Planets:',
                 style: context.textTheme.headline6,
               ),
-              FilmSubItems(
+              HorizontalImageList(
                 items: widget.film.planets,
-                urlPrefix: 'planets',
+                type: StarWarsType.planets,
               ),
               const Divider(),
               Text(
                 'Species:',
                 style: context.textTheme.headline6,
               ),
-              FilmSubItems(
+              HorizontalImageList(
                 items: widget.film.species,
-                urlPrefix: 'species',
+                type: StarWarsType.species,
               ),
             ],
           ),
@@ -151,14 +153,11 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Stack(
           children: [
-            SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _openingCrawlController,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  OpeningCrawl(openingCrawl: widget.film.openingCrawl),
-                ],
+            Center(
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _openingCrawlController,
+                child: OpeningCrawl(openingCrawl: widget.film.openingCrawl),
               ),
             ),
             Center(

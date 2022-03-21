@@ -1,17 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/enums/star_wars_entity.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/utils/image_utils.dart';
 
-class FilmSubItems extends StatelessWidget {
-  const FilmSubItems({
+class HorizontalImageList extends StatelessWidget {
+  const HorizontalImageList({
     Key? key,
     required this.items,
-    required this.urlPrefix,
+    required this.type,
   }) : super(key: key);
 
   final List<String> items;
-  final String urlPrefix;
+  final StarWarsType type;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class FilmSubItems extends StatelessWidget {
                   side: BorderSide(color: ThemeColors.yellow),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: 'https://starwars-visualguide.com/assets/img/$urlPrefix/${items[index]}.jpg',
+                  imageUrl: ImageUtility.imageFor(items[index], type),
                   placeholder: (context, url) => Container(
                     color: ThemeColors.black,
                   ),

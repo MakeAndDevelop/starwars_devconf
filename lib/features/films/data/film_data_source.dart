@@ -10,11 +10,12 @@ import 'dtos/film_response.dart';
 @Injectable()
 class FilmDataSource {
   final Mapper<FilmDto, Film> _mapper;
+  final Dio _httpClient;
 
-  FilmDataSource(this._mapper);
+  FilmDataSource(this._mapper, this._httpClient);
 
   Future<List<Film>?> getFilms() async {
-    final response = await Dio().get<Map<String, dynamic>>(Endpoints.films);
+    final response = await _httpClient.get<Map<String, dynamic>>(Endpoints.films);
 
     if (response.success && response.data != null) {
       final filmResponse = FilmResponse.fromJson(response.data!);
