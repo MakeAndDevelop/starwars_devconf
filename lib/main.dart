@@ -23,7 +23,7 @@ Future<void> _androidEnforceFrameRate() async {
 
   try {
     await FlutterDisplayMode.setHighRefreshRate();
-  } on Exception catch (e) {
+  } on Exception {
     // TODO
   }
 }

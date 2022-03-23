@@ -3,9 +3,9 @@ import 'package:injectable/injectable.dart';
 
 import '../../../common/constants/endpoints.dart';
 import '../../../common/mappers/mapper.dart';
+import '../../../common/network/dio_extensions.dart';
 import '../../../common/utils/network_utilities.dart';
 import '../films.dart';
-import 'dtos/film_response.dart';
 
 @Injectable()
 class FilmDataSource {
@@ -15,6 +15,7 @@ class FilmDataSource {
   FilmDataSource(this._mapper, this._httpClient);
 
   Future<List<Film>?> getFilms() async {
+    await _httpClient.addCaching();
     final response = await _httpClient.get<Map<String, dynamic>>(Endpoints.films);
 
     if (response.success && response.data != null) {

@@ -21,6 +21,9 @@ dependencies:
 
   # Http
   dio: ^4.0.4
+  dio_cache_interceptor: ^3.2.5
+  dio_cache_interceptor_hive_store: ^3.1.1
+  path_provider: ^2.0.9
 
   # Localization
   intl: ^0.17.0

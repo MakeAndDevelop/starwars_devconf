@@ -61,7 +61,7 @@ class _HeaderBackgroundImageWidgetState extends State<HeaderBackgroundImageWidge
             child: Container(
               alignment: Alignment.center,
               color: Colors.white.withOpacity(0.1),
-              child: SizedBox(),
+              child: const SizedBox(),
             ),
           ),
         ),

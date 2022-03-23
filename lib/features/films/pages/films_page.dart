@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
 import '../../features.dart';
-import '../widgets/film_list.dart';
 
 class FilmsPage extends StatelessWidget {
   const FilmsPage({Key? key}) : super(key: key);
@@ -26,28 +24,9 @@ class FilmsPage extends StatelessWidget {
           if (state is FilmsLoadedState) {
             return _body(state);
           }
-          return _loading(context);
+          return const LoadingIndicator();
         },
       ),
-    );
-  }
-
-  Column _loading(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.rocket_launch,
-          color: context.theme.primaryColor,
-        ),
-        Spacing.height16,
-        Text(
-          'Loading...',
-          style: TextStyle(
-            color: context.theme.primaryColor,
-          ),
-        ),
-      ],
     );
   }
 

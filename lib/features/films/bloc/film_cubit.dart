@@ -2,8 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features.dart';
-import '../data/film_data_source.dart';
-import 'film_state.dart';
 
 @Injectable()
 class FilmsCubit extends Cubit<FilmsState> {

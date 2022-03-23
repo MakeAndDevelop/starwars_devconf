@@ -1,19 +1,4 @@
 class FilmDto {
-  final String title;
-  final int episodeId;
-  final String openingCrawl;
-  final String director;
-  final String producer;
-  final DateTime releaseDate;
-  final List<String> characters;
-  final List<String> planets;
-  final List<String> starships;
-  final List<String> vehicles;
-  final List<String> species;
-  final DateTime created;
-  final DateTime edited;
-  final String url;
-
   const FilmDto({
     required this.title,
     required this.episodeId,
@@ -30,6 +15,21 @@ class FilmDto {
     required this.edited,
     required this.url,
   });
+
+  final String title;
+  final int episodeId;
+  final String openingCrawl;
+  final String director;
+  final String producer;
+  final DateTime releaseDate;
+  final List<String> characters;
+  final List<String> planets;
+  final List<String> starships;
+  final List<String> vehicles;
+  final List<String> species;
+  final DateTime created;
+  final DateTime edited;
+  final String url;
 
   factory FilmDto.fromJson(Map<String, dynamic> json) => FilmDto(
         title: json['title'] as String,

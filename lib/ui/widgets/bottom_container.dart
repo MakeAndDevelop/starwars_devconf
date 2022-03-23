@@ -25,9 +25,9 @@ class BottomContainer extends StatelessWidget {
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          // side: BorderSide(
-          //   width: 0.5,
-          // ),
+          side: BorderSide(
+            width: 0.5,
+          ),
         ),
         child: Padding(
           padding: Insets.all16,

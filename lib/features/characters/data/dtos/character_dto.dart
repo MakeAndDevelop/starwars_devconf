@@ -26,14 +26,19 @@ class CharacterDto {
   final String name;
   final String height;
   final String mass;
+
   @JsonKey(name: 'hair_color')
   final String hairColor;
+
   @JsonKey(name: 'skin_color')
   final String skinColor;
+
   @JsonKey(name: 'eye_color')
   final String eyeColor;
+
   @JsonKey(name: 'birth_year')
   final String birthYear;
+
   final String gender;
   final String homeworld;
   final List<String> films;

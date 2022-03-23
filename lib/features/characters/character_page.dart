@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:starwars_devconf/features/characters/character_header_image.dart';
 
 import '../../ui/ui.dart';
 import 'bloc/bloc.dart';
 import 'models/character.dart';
+import 'widgets/character_header_image.dart';
 
 class CharacterPage extends StatefulWidget {
   final String characterId;

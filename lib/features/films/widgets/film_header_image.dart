@@ -25,7 +25,6 @@ class FilmHeaderImage extends StatelessWidget {
           child: Image.network(
             imageUrl,
             fit: BoxFit.cover,
-            alignment: Alignment.center,
           ),
         ),
       ),
