@@ -4,13 +4,8 @@ import 'package:intl/intl.dart';
 import '../../../common/enums/star_wars_entity.dart';
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
-import '../../../ui/utils/image_utils.dart';
-import '../../../ui/widgets/fade_in_switcher.dart';
+import '../../characters/character_page.dart';
 import '../../features.dart';
-import '../widgets/film_characters.dart';
-import '../widgets/film_header_image.dart';
-import '../widgets/opening_crawl.dart';
-import 'description_item.dart';
 
 class FilmDetailsPage extends StatefulWidget {
   final Film film;
@@ -49,6 +44,8 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollOpeningCrawl());
     return Scaffold(
+      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           HeaderBackgroundImageWidget(
@@ -73,72 +70,70 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
 
   Flexible _content(BuildContext context) {
     return Flexible(
-      child: Card(
-        elevation: 8,
-        color: context.theme.backgroundColor,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          side: BorderSide(
-            width: 0.5,
-          ),
+      child: BottomContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              widget.film.title,
+              style: context.textTheme.headline4?.copyWith(color: ThemeColors.yellow),
+            ),
+            const Divider(),
+            DescriptionItem(label: 'Director:', value: widget.film.director),
+            Spacing.height4,
+            DescriptionItem(label: 'Producer:', value: widget.film.producer),
+            Spacing.height4,
+            DescriptionItem(label: 'Release date:', value: DateFormat.yMd().format(widget.film.releaseDate)),
+            const Divider(),
+            Text(
+              'Starships:',
+              style: context.textTheme.headline6,
+            ),
+            HorizontalImageList(
+              items: widget.film.starships,
+              type: StarWarsType.starship,
+            ),
+            const Divider(),
+            Text(
+              'Characters:',
+              style: context.textTheme.headline6,
+            ),
+            HorizontalImageList(
+              items: widget.film.characters,
+              type: StarWarsType.character,
+              itemTapped: (characterId) => _navigateToCharacterDetails(characterId),
+            ),
+            const Divider(),
+            Text(
+              'Planets:',
+              style: context.textTheme.headline6,
+            ),
+            HorizontalImageList(
+              items: widget.film.planets,
+              type: StarWarsType.planets,
+            ),
+            const Divider(),
+            Text(
+              'Species:',
+              style: context.textTheme.headline6,
+            ),
+            HorizontalImageList(
+              items: widget.film.species,
+              type: StarWarsType.species,
+            ),
+          ],
         ),
-        child: Padding(
-          padding: Insets.all16,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                widget.film.title,
-                style: context.textTheme.headline4?.copyWith(color: ThemeColors.yellow),
-              ),
-              const Divider(),
-              DescriptionItem(label: 'Director:', value: widget.film.director),
-              Spacing.height4,
-              DescriptionItem(label: 'Producer:', value: widget.film.producer),
-              Spacing.height4,
-              DescriptionItem(label: 'Release date:', value: DateFormat.yMd().format(widget.film.releaseDate)),
-              const Divider(),
-              Text(
-                'Starships:',
-                style: context.textTheme.headline6,
-              ),
-              HorizontalImageList(
-                items: widget.film.starships,
-                type: StarWarsType.starship,
-              ),
-              const Divider(),
-              Text(
-                'Characters:',
-                style: context.textTheme.headline6,
-              ),
-              HorizontalImageList(
-                items: widget.film.characters,
-                type: StarWarsType.character,
-              ),
-              const Divider(),
-              Text(
-                'Planets:',
-                style: context.textTheme.headline6,
-              ),
-              HorizontalImageList(
-                items: widget.film.planets,
-                type: StarWarsType.planets,
-              ),
-              const Divider(),
-              Text(
-                'Species:',
-                style: context.textTheme.headline6,
-              ),
-              HorizontalImageList(
-                items: widget.film.species,
-                type: StarWarsType.species,
-              ),
-            ],
-          ),
+      ),
+    );
+  }
+
+  Future<void> _navigateToCharacterDetails(String characterId) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (settings) => CharacterPage(
+          characterId: characterId,
         ),
       ),
     );

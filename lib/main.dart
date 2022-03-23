@@ -11,6 +11,7 @@ import 'ui/theme/theme.dart';
 
 void main() {
   configureDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
   _androidEnforceFrameRate();
   runApp(const StarWarsApp());
 }

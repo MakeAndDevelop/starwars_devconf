@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../ui.dart';
+import 'colors.dart';
 
 class AppTheme {
   static ThemeData get lightTheme => ThemeData(
@@ -31,6 +32,7 @@ class AppTheme {
         dividerTheme: const DividerThemeData(
           space: Insets.inset32,
         ),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(color: ThemeColors.yellow),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -47,7 +49,7 @@ class AppTheme {
           brightness: Brightness.dark,
         ),
         cardTheme: CardTheme(
-          elevation: ThemeConstants.elevation, //ThemeConstants.elev
+          elevation: ThemeConstants.elevation,
           clipBehavior: Clip.antiAlias,
           margin: EdgeInsets.zero,
           color: ThemeColors.mediumDarkGray,
@@ -55,13 +57,18 @@ class AppTheme {
             borderRadius: BorderRadius.circular(ThemeConstants.cornerRadius),
           ),
         ),
+        textTheme: const TextTheme(
+          headline4: TextStyle(color: ThemeColors.yellow),
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           foregroundColor: ThemeColors.yellow,
           elevation: 0,
         ),
-        dividerTheme: const DividerThemeData(
+        dividerTheme: DividerThemeData(
           space: Insets.inset32,
+          color: MaterialThemeColors.yellow.shade200,
         ),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(color: ThemeColors.yellow),
       );
 }

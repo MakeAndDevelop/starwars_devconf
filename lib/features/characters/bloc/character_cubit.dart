@@ -11,13 +11,15 @@ class CharacterCubit extends Cubit<CharacterState> {
   CharacterCubit(this._dataSource) : super(CharacterInitial());
 
   Future<void> loadCharacter(String id) async {
+    emit(CharacterLoadingState());
+
     final character = await _dataSource.getCharacter(id);
 
     if (character != null) {
-      emit(CharacterLoaded(character));
+      emit(CharacterLoadedState(character));
       return;
     }
 
-    emit(CharacterNotFound());
+    emit(CharacterNotFoundState());
   }
 }

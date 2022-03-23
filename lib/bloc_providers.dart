@@ -8,5 +8,8 @@ class BlocProviders {
     BlocProvider<FilmsCubit>(
       create: (_) => iocContainer.get<FilmsCubit>(),
     ),
+    BlocProvider<CharacterCubit>(
+      create: (_) => iocContainer.get<CharacterCubit>(),
+    ),
   ];
 }

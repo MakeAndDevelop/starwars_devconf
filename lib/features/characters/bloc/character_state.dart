@@ -9,16 +9,21 @@ class CharacterInitial extends CharacterState {
   List<Object> get props => [];
 }
 
-class CharacterLoaded extends CharacterState {
-  final Character character;
-
-  CharacterLoaded(this.character);
-
+class CharacterLoadingState extends CharacterState {
   @override
   List<Object> get props => [];
 }
 
-class CharacterNotFound extends CharacterState {
+class CharacterLoadedState extends CharacterState {
+  final Character character;
+
+  CharacterLoadedState(this.character);
+
+  @override
+  List<Object> get props => [character];
+}
+
+class CharacterNotFoundState extends CharacterState {
   @override
   List<Object> get props => [];
 }
