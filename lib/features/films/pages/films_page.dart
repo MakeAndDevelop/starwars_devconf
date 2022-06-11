@@ -10,21 +10,33 @@ class FilmsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            pinned: true,
+            title: const Text('Star Wars Episodes'),
+          ),
+        ],
+      ),
+    );
+
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Star Wars Episodes'),
       ),
       body: BlocConsumer<FilmsCubit, FilmsState>(
         listener: (context, state) {
           if (state is FilmSelectedState) {
-            _openFilmDetails(context, state);
+            //_openFilmDetails(context, state);
           }
         },
         buildWhen: (currentState, newState) => currentState != newState,
         builder: (context, state) {
-          if (state is FilmsLoadedState) {
-            return _body(state);
-          }
-          return const LoadingIndicator();
+          return FadeInSwitcher(
+            duration: const Duration(milliseconds: 600),
+            child: state is FilmsLoadedState ? _body(state) : const LoadingIndicator(),
+          );
         },
       ),
     );

@@ -25,24 +25,27 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollOpeningCrawl());
   }
 
   Future<void> _scrollOpeningCrawl() async {
-    await _openingCrawlController.animateTo(
+    _openingCrawlController
+        .animateTo(
       _openingCrawlController.position.maxScrollExtent,
       duration: const Duration(seconds: 10),
       curve: Curves.linear,
-    );
-    if (mounted) {
-      setState(() {
-        showFilmPoster = true;
-      });
-    }
+    )
+        .then((_) {
+      if (mounted) {
+        setState(() {
+          showFilmPoster = true;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollOpeningCrawl());
     return Scaffold(
       appBar: AppBar(),
       extendBodyBehindAppBar: true,
@@ -80,11 +83,20 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
               style: context.textTheme.headline4?.copyWith(color: ThemeColors.yellow),
             ),
             const Divider(),
-            DescriptionItem(label: 'Director:', value: widget.film.director),
+            DescriptionItem(
+              label: 'Director:',
+              value: widget.film.director,
+            ),
             Spacing.height4,
-            DescriptionItem(label: 'Producer:', value: widget.film.producer),
+            DescriptionItem(
+              label: 'Producer:',
+              value: widget.film.producer,
+            ),
             Spacing.height4,
-            DescriptionItem(label: 'Release date:', value: DateFormat.yMd().format(widget.film.releaseDate)),
+            DescriptionItem(
+              label: 'Release date:',
+              value: DateFormat.yMd().format(widget.film.releaseDate),
+            ),
             const Divider(),
             Text(
               'Starships:',
