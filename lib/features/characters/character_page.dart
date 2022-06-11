@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../common/enums/star_wars_entity.dart';
+import '../../ui/theme/spacing.dart';
 import '../../ui/ui.dart';
 import 'bloc/bloc.dart';
 import 'models/character.dart';
@@ -80,6 +82,20 @@ class _CharacterPageState extends State<CharacterPage> {
           style: context.theme.textTheme.headline4,
         ),
         const Divider(),
+        Text('Birth year: ${character.birthYear}'),
+        Spacing.height8,
+        Text('Eye color: ${character.eyeColor}'),
+        Spacing.height8,
+        Text('Hair color: ${character.hairColor}'),
+        const Divider(),
+        Text(
+          'Films:',
+          style: context.textTheme.headline6,
+        ),
+        HorizontalImageList(
+          items: character.films,
+          type: StarWarsType.film,
+        ),
       ],
     );
   }

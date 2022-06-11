@@ -42,7 +42,7 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollOpeningCrawl());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollOpeningCrawl());
     return Scaffold(
       appBar: AppBar(),
       extendBodyBehindAppBar: true,

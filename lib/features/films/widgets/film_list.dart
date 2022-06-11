@@ -14,9 +14,7 @@ class FilmList extends StatelessWidget {
       padding: Insets.all16,
       child: ListView.builder(
         itemCount: films.length,
-        itemBuilder: (context, index) => FilmListItem(
-          film: films[index],
-        ),
+        itemBuilder: (context, index) => FilmListItem(film: films[index]),
       ),
     );
   }

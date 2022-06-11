@@ -17,39 +17,39 @@ dependencies:
   equatable: ^2.0.3 # Equatable used for easy overriding equality
 
   # Serialization
-  json_annotation: ^4.4.0 # json
+  json_annotation: ^4.5.0 # json
 
   # Http
-  dio: ^4.0.4
-  dio_cache_interceptor: ^3.2.5
+  dio: ^4.0.6
+  dio_cache_interceptor: ^3.2.7
   dio_cache_interceptor_hive_store: ^3.1.1
-  path_provider: ^2.0.9
+  path_provider: ^2.0.10
 
   # Localization
   intl: ^0.17.0
 
   # Framework tweaks
-  flutter_displaymode: ^0.3.2
+  flutter_displaymode: ^0.4.0
 
   # UI
-  cached_network_image: ^3.2.0
+  cached_network_image: ^3.2.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^2.1.7 # Build runner for code generation
+  build_runner: ^2.1.11 # Build runner for code generation
 
   # Json serializable
-  json_serializable: ^6.1.5 # Used to generate json (de)serializer code
+  json_serializable: ^6.2.0 # Used to generate json (de)serializer code
   injectable_generator: ^1.5.3 # Used to generate DI boilerplate
 
   # Linting
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1
 
 flutter:
   uses-material-design: true

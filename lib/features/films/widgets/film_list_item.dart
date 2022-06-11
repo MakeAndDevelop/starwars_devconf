@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
@@ -12,6 +13,8 @@ class FilmListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final releaseDate = DateFormat.yMMM().format(film.releaseDate);
+
     return Padding(
       padding: Insets.vertical8,
       child: Card(
@@ -28,7 +31,17 @@ class FilmListItem extends StatelessWidget {
               ),
               Spacing.width8,
               Expanded(
-                child: Text(film.title),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      film.title,
+                      style: context.textTheme.headline6,
+                    ),
+                    Text('Release date: $releaseDate'),
+                  ],
+                ),
               ),
               Spacing.width8,
               Text(
