@@ -84,19 +84,10 @@ class _CharacterPageState extends State<CharacterPage> {
         ),
         const Divider(),
         DescriptionItem(
-          label: 'Birth year:',
-          value: character.birthYear,
-        ),
-        Spacing.height8,
-        DescriptionItem(
-          label: 'Eye color:',
-          value: character.eyeColor,
-        ),
-        Spacing.height8,
-        DescriptionItem(
-          label: 'Hair color:',
+          label: 'Hair color',
           value: character.hairColor,
         ),
+        Spacing.height8,
         const Divider(),
         Text(
           'Films:',
@@ -116,3 +107,21 @@ class _CharacterPageState extends State<CharacterPage> {
     );
   }
 }
+
+
+
+        // DescriptionItem(
+        //   label: 'Birth year',
+        //   value: character.birthYear,
+        // ),
+        // Spacing.height8,
+        // DescriptionItem(
+        //   label: 'Eye color',
+        //   value: character.eyeColor,
+        // ),
+        // Spacing.height8,
+        // DescriptionItem(
+        //   label: 'Hair color',
+        //   value: character.hairColor,
+        // ),
+        // Spacing.height8,

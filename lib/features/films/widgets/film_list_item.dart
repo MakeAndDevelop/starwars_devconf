@@ -15,9 +15,10 @@ class FilmListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: Insets.vertical8,
+      padding: Insets.listItem16,
       child: OpenContainer(
         closedColor: Colors.transparent,
+        transitionDuration: const Duration(milliseconds: 600),
         closedBuilder: (context, action) => FilmListItemBody(film: film, action: action),
         openBuilder: (context, action) {
           return FilmDetailsPage(film: film);
@@ -66,7 +67,7 @@ class FilmListItemBody extends StatelessWidget {
                     film.title,
                     style: context.textTheme.headline6,
                   ),
-                  Text('Release date: $releaseDate'),
+                  Text(releaseDate)
                 ],
               ),
             ),

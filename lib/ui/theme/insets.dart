@@ -22,4 +22,6 @@ class Insets {
   static const EdgeInsets vertical8 = EdgeInsets.symmetric(vertical: inset8);
   static const EdgeInsets vertical4 = EdgeInsets.symmetric(vertical: inset4);
   static const EdgeInsets vertical16 = EdgeInsets.symmetric(vertical: inset16);
+
+  static const EdgeInsets listItem16 = EdgeInsets.symmetric(horizontal: inset16, vertical: inset8);
 }
