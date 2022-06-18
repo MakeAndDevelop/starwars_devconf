@@ -33,7 +33,7 @@ class FilmListItem extends StatelessWidget {
   }
 }
 
-class FilmListItemBody extends StatelessWidget {
+class FilmListItemBody extends StatefulWidget {
   const FilmListItemBody({
     Key? key,
     required this.film,
@@ -44,25 +44,33 @@ class FilmListItemBody extends StatelessWidget {
   final void Function() action;
 
   @override
+  State<FilmListItemBody> createState() => _FilmListItemBodyState();
+}
+
+class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProviderStateMixin {
+  String get _imageUrl => 'https://starwars-visualguide.com/assets/img/films/${widget.film.id}.jpg';
+
+  @override
   Widget build(BuildContext context) {
-    final releaseDate = DateFormat.yMMM().format(film.releaseDate);
+    final releaseDate = DateFormat.yMMM().format(widget.film.releaseDate);
 
     return Card(
       elevation: 1,
       shadowColor: ThemeColors.shadowColor,
       shape: const RoundedRectangleBorder(
         borderRadius: ThemeConstants.itemRadius,
-        side: BorderSide(color: ThemeColors.borderColor),
+        side: BorderSide(color: ThemeColors.solidBorderColor),
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
         child: InkWell(
           borderRadius: ThemeConstants.itemRadius,
           onTap: () {
-            BlocProvider.of<FilmsCubit>(context).selectFilm(film.episodeId);
-            action();
+            BlocProvider.of<FilmsCubit>(context).selectFilm(widget.film.episodeId);
+            widget.action();
           },
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Spacing.width24,
               Expanded(
@@ -71,7 +79,7 @@ class FilmListItemBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      film.title,
+                      widget.film.title,
                       style: context.textTheme.headline6,
                     ),
                     Text(releaseDate),
@@ -82,11 +90,11 @@ class FilmListItemBody extends StatelessWidget {
               ClipRRect(
                 borderRadius: ThemeConstants.itemInnerRadius,
                 child: Image.network(
-                  'https://starwars-visualguide.com/assets/img/films/${film.id}.jpg',
+                  _imageUrl,
                   height: 140,
                   alignment: Alignment.topCenter,
-                  fit: BoxFit.fitWidth,
-                  color: Colors.brown.withOpacity(0.85),
+                  fit: BoxFit.fitHeight,
+                  color: Colors.brown.withOpacity(0.75),
                   colorBlendMode: BlendMode.dstIn,
                 ),
               ),

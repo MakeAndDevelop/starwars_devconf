@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import '../../../common/enums/star_wars_entity.dart';
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/widgets/ui_components/containers/body_container.dart';
+import '../../../ui/widgets/ui_components/containers/box.dart';
 import '../../characters/character_page.dart';
 import '../../features.dart';
 
@@ -17,56 +19,173 @@ class FilmDetailsPage extends StatefulWidget {
 }
 
 class _FilmDetailsPageState extends State<FilmDetailsPage> {
-  final ScrollController _scrollController = ScrollController();
-  final ScrollController _openingCrawlController = ScrollController();
+  //final ScrollController _scrollController = ScrollController();
+  //final ScrollController _openingCrawlController = ScrollController();
   String get _imageUrl => ImageUtility.film(widget.film.id);
-  bool showFilmPoster = false;
+  Film get _film => widget.film;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollOpeningCrawl());
+    //WidgetsBinding.instance.addPostFrameCallback((_) => _scrollOpeningCrawl());
   }
 
-  Future<void> _scrollOpeningCrawl() async {
-    _openingCrawlController
-        .animateTo(
-      _openingCrawlController.position.maxScrollExtent,
-      duration: const Duration(seconds: 10),
-      curve: Curves.linear,
-    )
-        .then((_) {
-      if (mounted) {
-        setState(() {
-          showFilmPoster = true;
-        });
-      }
-    });
-  }
+  // Future<void> _scrollOpeningCrawl() async {
+  //   _openingCrawlController
+  //       .animateTo(
+  //     _openingCrawlController.position.maxScrollExtent,
+  //     duration: const Duration(seconds: 10),
+  //     curve: Curves.linear,
+  //   )
+  //       .then((_) {
+  //     if (mounted) {
+  //       setState(() {
+  //         showFilmPoster = true;
+  //       });
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          HeaderBackgroundImageWidget(
-            scrollController: _scrollController,
-            imageUrl: _imageUrl,
+      body: BodyContainer(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // ToDo To column / sliver
+              const SizedBox(height: 120),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 440,
+                    child: Card(
+                      margin: Insets.zero,
+                      elevation: 2,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: ThemeConstants.mainItemRadius,
+                        side: BorderSide(color: ThemeColors.borderColor),
+                      ),
+                      child: Image.network(
+                        _imageUrl,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.centerRight,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: RotatedBox(
+                        quarterTurns: -1,
+                        child: Container(
+                          padding: Insets.horizontal16,
+                          width: 440,
+                          child: Text(
+                            _film.title.toUpperCase(),
+                            softWrap: false,
+                            overflow: TextOverflow.visible,
+                            style: context.textTheme.headline6?.copyWith(
+                              color: ThemeColors.textColor.withOpacity(0.6),
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Insets.inset16,
+                  horizontal: Insets.inset12,
+                ),
+                child: Wrap(
+                  children: [
+                    LabelBox(
+                      label: 'Release date:',
+                      value: DateFormat.yMd().format(_film.releaseDate),
+                    ),
+                    LabelBox(
+                      label: 'Director:',
+                      value: _film.director,
+                    ),
+                    LabelBox(
+                      label: 'Episode:',
+                      value: _film.episodeId.toString(),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: Insets.all16,
+                  child: Text(
+                    _film.openingCrawl,
+                    softWrap: true,
+                    style: context.textTheme.bodyText1?.copyWith(fontSize: 16),
+                    maxLines: 6,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+              const Divider(),
+              Padding(
+                padding: Insets.ltr16,
+                child: Text(
+                  'Characters:',
+                  style: context.textTheme.headline6,
+                ),
+              ),
+              HorizontalImageList(
+                items: _film.characters,
+                type: StarWarsType.character,
+              ),
+              const Divider(),
+              Padding(
+                padding: Insets.ltr16,
+                child: Text(
+                  'Species:',
+                  style: context.textTheme.headline6,
+                ),
+              ),
+              HorizontalImageList(
+                items: _film.planets,
+                type: StarWarsType.species,
+              ),
+              const Divider(),
+              Padding(
+                padding: Insets.ltr16,
+                child: Text(
+                  'Starships:',
+                  style: context.textTheme.headline6,
+                ),
+              ),
+              HorizontalImageList(
+                items: _film.starships,
+                type: StarWarsType.starship,
+              ),
+              const Divider(),
+              Padding(
+                padding: Insets.ltr16,
+                child: Text(
+                  'Planets:',
+                  style: context.textTheme.headline6,
+                ),
+              ),
+              HorizontalImageList(
+                items: _film.planets,
+                type: StarWarsType.planets,
+              ),
+              Spacing.height40,
+            ],
           ),
-          SingleChildScrollView(
-            controller: _scrollController,
-            physics: const ClampingScrollPhysics(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _openingCrawl(),
-                _content(context),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -178,31 +297,31 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
     );
   }
 
-  Widget _openingCrawl() {
-    return Container(
-      width: double.infinity,
-      height: 360,
-      alignment: Alignment.center,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: Stack(
-          children: [
-            Center(
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _openingCrawlController,
-                child: OpeningCrawl(openingCrawl: widget.film.openingCrawl),
-              ),
-            ),
-            Center(
-              child: FadeInSwitcher(
-                duration: const Duration(milliseconds: 500),
-                child: showFilmPoster ? FilmHeaderImage(imageUrl: _imageUrl) : const SizedBox(),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _openingCrawl() {
+  //   return Container(
+  //     width: double.infinity,
+  //     height: 360,
+  //     alignment: Alignment.center,
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 40),
+  //       child: Stack(
+  //         children: [
+  //           Center(
+  //             child: SingleChildScrollView(
+  //               physics: const NeverScrollableScrollPhysics(),
+  //               //controller: _openingCrawlController,
+  //               child: OpeningCrawl(openingCrawl: widget.film.openingCrawl),
+  //             ),
+  //           ),
+  //           Center(
+  //             child: FadeInSwitcher(
+  //               duration: const Duration(milliseconds: 500),
+  //               child: showFilmPoster ? FilmHeaderImage(imageUrl: _imageUrl) : const SizedBox(),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

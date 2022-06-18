@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -19,43 +21,62 @@ class HorizontalImageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: SizedBox(
-        height: 100,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: Insets.all8,
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shape: const CircleBorder(
-                  side: BorderSide(color: ThemeColors.yellow),
-                ),
-                child: Material(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          bottom: Insets.inset16,
+        ),
+        child: SizedBox(
+          height: 140,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: index == 0
+                    ? Insets.left16
+                    : index == items.length - 1
+                        ? Insets.right16
+                        : Insets.horizontal8,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: ThemeConstants.smallItemRadius,
+                    side: BorderSide(color: ThemeColors.solidBorderColor),
+                  ),
+                  elevation: 2,
                   child: InkWell(
                     onTap: () => itemTapped?.call(items[index]),
                     child: CachedNetworkImage(
                       imageUrl: ImageUtility.imageFor(items[index], type),
-                      placeholder: (context, url) => Container(
-                        color: ThemeColors.black,
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: ThemeColors.black,
-                        child: const Icon(
-                          Icons.blur_off,
-                          color: ThemeColors.yellow,
+                      placeholder: (context, url) => ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                          child: Container(
+                            color: ThemeColors.overlayColor,
+                          ),
                         ),
                       ),
-                      height: 64,
-                      width: 64,
+                      errorWidget: (context, url, error) => ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                          child: Container(
+                            color: ThemeColors.overlayColor,
+                            child: const Icon(
+                              Icons.blur_off,
+                              color: ThemeColors.textColor,
+                            ),
+                          ),
+                        ),
+                      ),
                       fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                      width: 120,
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

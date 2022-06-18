@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common/utils/state_comparer.dart';
-import '../../../generated/assets.dart';
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/widgets/ui_components/containers/body_container.dart';
 import '../../features.dart';
 
 class FilmsPage extends StatelessWidget {
@@ -16,23 +16,7 @@ class FilmsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
-              image: AssetImage(
-                Assets.imagesBackgroundBlurred,
-              ),
-              fit: BoxFit.cover),
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.black,
-              Colors.brown[600]!,
-            ],
-          ),
-        ),
+      body: BodyContainer(
         child: CustomScrollView(
           slivers: [
             const DefaultAppBar(),
@@ -42,8 +26,7 @@ class FilmsPage extends StatelessWidget {
               builder: (context, state) {
                 return SliverAnimatedSwitcher(
                   duration: const Duration(milliseconds: 600),
-                  child:
-                      state is FilmsLoadedState ? _body(state) : const SliverFillRemaining(child: LoadingIndicator()),
+                  child: state is FilmsLoadedState ? _body(state) : const SliverToBoxAdapter(child: LoadingIndicator()),
                 );
               },
             ),

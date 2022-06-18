@@ -29,7 +29,10 @@ class AppTheme {
           elevation: 0,
         ),
         dividerTheme: const DividerThemeData(
-          space: Insets.inset32,
+          space: Insets.inset16,
+          indent: Insets.inset16,
+          endIndent: Insets.inset16,
+          thickness: 1.3,
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(color: ThemeColors.yellow),
       );
@@ -72,9 +75,12 @@ class AppTheme {
           foregroundColor: ThemeColors.textColor,
           elevation: 0,
         ),
-        dividerTheme: DividerThemeData(
+        dividerTheme: const DividerThemeData(
           space: Insets.inset32,
-          color: MaterialThemeColors.yellow.shade200,
+          indent: Insets.inset16,
+          endIndent: Insets.inset16,
+          thickness: 1.2,
+          color: ThemeColors.secondaryTextColor,
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(color: ThemeColors.textColor),
       );
