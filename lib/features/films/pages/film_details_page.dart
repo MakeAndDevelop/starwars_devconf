@@ -71,6 +71,33 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
     );
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(),
+  //     extendBodyBehindAppBar: true,
+  //     body: Stack(
+  //       children: [
+  //         HeaderBackgroundImageWidget(
+  //           scrollController: _scrollController,
+  //           imageUrl: _imageUrl,
+  //         ),
+  //         SingleChildScrollView(
+  //           controller: _scrollController,
+  //           physics: const ClampingScrollPhysics(),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               _openingCrawl(),
+  //               _content(context),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   Flexible _content(BuildContext context) {
     return Flexible(
       child: BottomContainer(

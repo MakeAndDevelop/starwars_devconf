@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +19,10 @@ class FilmListItem extends StatelessWidget {
     return Padding(
       padding: Insets.listItem16,
       child: OpenContainer(
+        openColor: Colors.transparent,
         closedColor: Colors.transparent,
+        closedElevation: 0,
+        openElevation: 0,
         transitionDuration: const Duration(milliseconds: 600),
         closedBuilder: (context, action) => FilmListItemBody(film: film, action: action),
         openBuilder: (context, action) {
@@ -43,41 +48,50 @@ class FilmListItemBody extends StatelessWidget {
     final releaseDate = DateFormat.yMMM().format(film.releaseDate);
 
     return Card(
-      child: InkWell(
-        onTap: () {
-          BlocProvider.of<FilmsCubit>(context).selectFilm(film.episodeId);
-          action();
-        },
-        child: Row(
-          children: [
-            Image.network(
-              'https://starwars-visualguide.com/assets/img/films/${film.id}.jpg',
-              width: 80,
-              height: 80,
-              alignment: Alignment.topCenter,
-              fit: BoxFit.fitWidth,
-            ),
-            Spacing.width8,
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    film.title,
-                    style: context.textTheme.headline6,
-                  ),
-                  Text(releaseDate)
-                ],
+      elevation: 1,
+      shadowColor: ThemeColors.shadowColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: ThemeConstants.itemRadius,
+        side: BorderSide(color: ThemeColors.borderColor),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+        child: InkWell(
+          borderRadius: ThemeConstants.itemRadius,
+          onTap: () {
+            BlocProvider.of<FilmsCubit>(context).selectFilm(film.episodeId);
+            action();
+          },
+          child: Row(
+            children: [
+              Spacing.width24,
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      film.title,
+                      style: context.textTheme.headline6,
+                    ),
+                    Text(releaseDate),
+                  ],
+                ),
               ),
-            ),
-            Spacing.width8,
-            Text(
-              '${film.episodeId}',
-              style: const TextStyle(fontSize: 20),
-            ),
-            Spacing.width24,
-          ],
+              Spacing.width24,
+              ClipRRect(
+                borderRadius: ThemeConstants.itemInnerRadius,
+                child: Image.network(
+                  'https://starwars-visualguide.com/assets/img/films/${film.id}.jpg',
+                  height: 140,
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.fitWidth,
+                  color: Colors.brown.withOpacity(0.85),
+                  colorBlendMode: BlendMode.dstIn,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

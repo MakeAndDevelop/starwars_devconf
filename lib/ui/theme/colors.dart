@@ -14,6 +14,11 @@ class ThemeColors {
   static const Color mediumDarkGray = Color.fromRGBO(56, 56, 56, 1.0);
   static const Color mediumGray = Color.fromRGBO(97, 110, 113, 1.0);
   static const Color lightGray = Color.fromRGBO(136, 151, 154, 1.0);
+
+  static const Color textColor = Color(0xFFD8C48A);
+  static const Color secondaryTextColor = Color(0xFFBFAEA9);
+  static const Color borderColor = Color(0x22BFAEA9);
+  static const Color shadowColor = Color(0xDD000000);
 }
 
 class MaterialThemeColors {
@@ -24,4 +29,6 @@ class MaterialThemeColors {
   static MaterialColor get red => createMaterialColor(ThemeColors.red);
   static MaterialColor get orange => createMaterialColor(ThemeColors.orange);
   static MaterialColor get darkGrey => createMaterialColor(ThemeColors.darkGray);
+  static MaterialColor get textColor => createMaterialColor(ThemeColors.textColor);
+  static MaterialColor get secondaryTextColor => createMaterialColor(ThemeColors.secondaryTextColor);
 }

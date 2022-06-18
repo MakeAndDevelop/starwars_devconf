@@ -36,11 +36,11 @@ class AppTheme {
 
   static ThemeData get darkTheme => ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: MaterialThemeColors.yellow,
+        primarySwatch: MaterialThemeColors.textColor,
         scaffoldBackgroundColor: ThemeColors.darkGray,
         backgroundColor: ThemeColors.darkGray,
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: MaterialThemeColors.yellow,
+          primarySwatch: MaterialThemeColors.textColor,
           backgroundColor: ThemeColors.darkGray,
           accentColor: MaterialThemeColors.white,
           cardColor: ThemeColors.mediumDarkGray,
@@ -48,26 +48,34 @@ class AppTheme {
           brightness: Brightness.dark,
         ),
         cardTheme: CardTheme(
-          elevation: ThemeConstants.elevation,
+          color: Colors.transparent,
+          elevation: 0,
           clipBehavior: Clip.antiAlias,
           margin: EdgeInsets.zero,
-          color: ThemeColors.mediumDarkGray,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(ThemeConstants.cornerRadius),
+            side: const BorderSide(color: ThemeColors.borderColor),
           ),
         ),
         textTheme: const TextTheme(
-          headline4: TextStyle(color: ThemeColors.yellow),
+          headline1: TextStyle(color: ThemeColors.textColor),
+          headline2: TextStyle(color: ThemeColors.textColor),
+          headline3: TextStyle(color: ThemeColors.textColor),
+          headline4: TextStyle(color: ThemeColors.textColor),
+          headline5: TextStyle(color: ThemeColors.textColor),
+          headline6: TextStyle(color: ThemeColors.textColor),
+          bodyText1: TextStyle(color: ThemeColors.secondaryTextColor),
+          bodyText2: TextStyle(color: ThemeColors.secondaryTextColor),
         ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
-          foregroundColor: ThemeColors.yellow,
+          foregroundColor: ThemeColors.textColor,
           elevation: 0,
         ),
         dividerTheme: DividerThemeData(
           space: Insets.inset32,
           color: MaterialThemeColors.yellow.shade200,
         ),
-        progressIndicatorTheme: const ProgressIndicatorThemeData(color: ThemeColors.yellow),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(color: ThemeColors.textColor),
       );
 }
