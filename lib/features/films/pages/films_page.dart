@@ -7,6 +7,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 import '../../../common/utils/state_comparer.dart';
 import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/widgets/slivers/default_app_bar.dart';
 import '../../../ui/widgets/ui_components/containers/body_container.dart';
 import '../../features.dart';
 
@@ -19,7 +20,17 @@ class FilmsPage extends StatelessWidget {
       body: BodyContainer(
         child: CustomScrollView(
           slivers: [
-            const DefaultAppBar(),
+            DefaultAppBar(
+              title: Text.rich(
+                const TextSpan(
+                  children: [
+                    TextSpan(text: 'STAR', style: TextStyle(fontWeight: FontWeight.w900)),
+                    TextSpan(text: 'WARS', style: TextStyle(fontWeight: FontWeight.w100)),
+                  ],
+                ),
+                style: context.theme.textTheme.headline5,
+              ),
+            ),
             SliverSpacing.height16,
             BlocBuilder<FilmsCubit, FilmsState>(
               buildWhen: defaultBlocCondition<FilmsState>(),
@@ -57,46 +68,6 @@ class FilmsPage extends StatelessWidget {
         (context, index) => FilmListItem(film: state.films[index]),
         childCount: state.films.length,
       ),
-    );
-  }
-}
-
-class DefaultAppBar extends StatelessWidget {
-  const DefaultAppBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      shadowColor: ThemeColors.shadowColor,
-      floating: true,
-      expandedHeight: 120,
-      elevation: 1,
-      forceElevated: true,
-      flexibleSpace: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: ThemeColors.borderColor),
-              ),
-            ),
-            child: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text.rich(
-                const TextSpan(
-                  children: [
-                    TextSpan(text: 'STAR', style: TextStyle(fontWeight: FontWeight.w900)),
-                    TextSpan(text: 'WARS', style: TextStyle(fontWeight: FontWeight.w100)),
-                  ],
-                ),
-                style: context.theme.textTheme.headline5,
-              ),
-            ),
-          ),
-        ),
-      ),
-      backgroundColor: Colors.transparent,
     );
   }
 }

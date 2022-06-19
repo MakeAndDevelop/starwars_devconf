@@ -42,5 +42,7 @@ class Insets {
   static const EdgeInsets left16 = EdgeInsets.only(left: inset16);
 
   static const EdgeInsets listItem16 = EdgeInsets.symmetric(horizontal: inset16, vertical: inset8);
+  static const EdgeInsets firstListItem16 = EdgeInsets.only(left: inset16, right: inset8);
+  static const EdgeInsets lastListItem16 = EdgeInsets.only(right: inset16, left: inset8);
   static const EdgeInsets horizontalListItem16 = EdgeInsets.symmetric(vertical: inset16, horizontal: inset8);
 }

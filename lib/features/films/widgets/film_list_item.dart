@@ -87,9 +87,7 @@ class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProvider
                 ),
               ),
               Spacing.width24,
-              ClipRRect(
-                borderRadius: ThemeConstants.itemInnerRadius,
-                child: Image.network(
+              Image.network(
                   _imageUrl,
                   height: 140,
                   alignment: Alignment.topCenter,
@@ -97,7 +95,6 @@ class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProvider
                   color: Colors.brown.withOpacity(0.75),
                   colorBlendMode: BlendMode.dstIn,
                 ),
-              ),
             ],
           ),
         ),

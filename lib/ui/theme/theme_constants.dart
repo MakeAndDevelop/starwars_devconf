@@ -3,7 +3,7 @@ import 'package:flutter/painting.dart';
 class ThemeConstants {
   static const double elevation = 3.0;
   static const double barElevation = 6.0;
-  static const double cornerRadius = 7.0;
+  static const double cornerRadius = 8.0;
   static const double largeCornerRadius = 42.0;
   static const double extraLargeCornerRadius = 140.0;
   static const Radius radius = Radius.circular(cornerRadius);

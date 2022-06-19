@@ -5,6 +5,8 @@ import 'package:starwars_devconf/features/films/pages/description_item.dart';
 import '../../common/enums/star_wars_entity.dart';
 import '../../ui/theme/spacing.dart';
 import '../../ui/ui.dart';
+import '../../ui/widgets/slivers/sized_sliver.dart';
+import '../../ui/widgets/ui_components/containers/body_container.dart';
 import 'bloc/bloc.dart';
 import 'models/character.dart';
 import 'widgets/character_header_image.dart';
@@ -30,18 +32,61 @@ class _CharacterPageState extends State<CharacterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      extendBodyBehindAppBar: true,
-      body: BlocBuilder<CharacterCubit, CharacterState>(
-        builder: (context, state) {
-          if (state is CharacterLoadedState) {
-            return _body(state);
-          }
-          if (state is CharacterNotFoundState) {
-            return _characterNotFound();
-          }
-          return const LoadingIndicator();
-        },
+      body: BodyContainer(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text(
+                '',
+                style: const TextStyle(color: ThemeColors.textColor),
+              ),
+            ),
+            const SizedSliver(height: 40),
+            SliverToBoxAdapter(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 440,
+                    child: Card(
+                      margin: Insets.zero,
+                      elevation: 2,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: ThemeConstants.mainItemRadius,
+                        side: BorderSide(color: ThemeColors.borderColor),
+                      ),
+                      child: Image.network(
+                        ImageUtility.character(widget.characterId),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.centerRight,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: RotatedBox(
+                        quarterTurns: -1,
+                        child: Container(
+                          padding: Insets.horizontal16,
+                          width: 440,
+                          child: Text(
+                            '',
+                            softWrap: false,
+                            overflow: TextOverflow.visible,
+                            style: context.textTheme.headline6?.copyWith(
+                              color: ThemeColors.secondaryTextColor.withOpacity(0.6),
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -107,21 +152,3 @@ class _CharacterPageState extends State<CharacterPage> {
     );
   }
 }
-
-
-
-        // DescriptionItem(
-        //   label: 'Birth year',
-        //   value: character.birthYear,
-        // ),
-        // Spacing.height8,
-        // DescriptionItem(
-        //   label: 'Eye color',
-        //   value: character.eyeColor,
-        // ),
-        // Spacing.height8,
-        // DescriptionItem(
-        //   label: 'Hair color',
-        //   value: character.hairColor,
-        // ),
-        // Spacing.height8,

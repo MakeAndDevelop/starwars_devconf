@@ -19,7 +19,7 @@ class Box extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       padding: const EdgeInsets.symmetric(
         vertical: Insets.inset8,
-        horizontal: Insets.inset16,
+        horizontal: Insets.inset12,
       ),
       child: child,
     );

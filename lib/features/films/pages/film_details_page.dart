@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../common/enums/star_wars_entity.dart';
-import '../../../ui/theme/spacing.dart';
+import '../../../ui/theme/animations.dart';
 import '../../../ui/ui.dart';
+import '../../../ui/widgets/slivers/sized_sliver.dart';
 import '../../../ui/widgets/ui_components/containers/body_container.dart';
 import '../../../ui/widgets/ui_components/containers/box.dart';
 import '../../characters/character_page.dart';
@@ -23,6 +26,7 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
   //final ScrollController _openingCrawlController = ScrollController();
   String get _imageUrl => ImageUtility.film(widget.film.id);
   Film get _film => widget.film;
+  bool _showOpeningCrawl = false;
 
   @override
   void initState() {
@@ -49,17 +53,18 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      extendBodyBehindAppBar: true,
       body: BodyContainer(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // ToDo To column / sliver
-              const SizedBox(height: 120),
-              Row(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text(
+                _film.title,
+                style: const TextStyle(color: ThemeColors.textColor),
+              ),
+            ),
+            const SizedSliver(height: 40),
+            SliverToBoxAdapter(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
@@ -90,7 +95,7 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
                             softWrap: false,
                             overflow: TextOverflow.visible,
                             style: context.textTheme.headline6?.copyWith(
-                              color: ThemeColors.textColor.withOpacity(0.6),
+                              color: ThemeColors.secondaryTextColor.withOpacity(0.6),
                             ),
                             textAlign: TextAlign.end,
                           ),
@@ -100,7 +105,9 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
                   ),
                 ],
               ),
-              Padding(
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: Insets.inset16,
                   horizontal: Insets.inset12,
@@ -122,163 +129,102 @@ class _FilmDetailsPageState extends State<FilmDetailsPage> {
                   ],
                 ),
               ),
-              Flexible(
-                child: Padding(
-                  padding: Insets.all16,
-                  child: Text(
-                    _film.openingCrawl,
-                    softWrap: true,
-                    style: context.textTheme.bodyText1?.copyWith(fontSize: 16),
-                    maxLines: 6,
-                    overflow: TextOverflow.fade,
+            ),
+            SliverContainer(
+              padding: Insets.all16,
+              child: AnimatedSize(
+                duration: AnimationConstants.animationDuration,
+                alignment: Alignment.topLeft,
+                curve: Curves.easeInOut,
+                child: Text(
+                  _film.openingCrawl,
+                  softWrap: true,
+                  style: context.textTheme.bodyText1?.copyWith(fontSize: 16),
+                  maxLines: _showOpeningCrawl ? null : 6,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: Insets.zero,
+                padding: Insets.horizontal16,
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  onPressed: () => setState(() => _showOpeningCrawl = !_showOpeningCrawl),
+                  child: Row(
+                    children: [
+                      AnimatedRotation(
+                        turns: _showOpeningCrawl ? 1.5 : 1.75,
+                        duration: AnimationConstants.animationDuration,
+                        curve: Curves.easeInOut,
+                        child: const Icon(Icons.arrow_drop_down),
+                      ),
+                      Text(_showOpeningCrawl ? 'SHOW LESS' : 'SHOW MORE'),
+                    ],
                   ),
                 ),
               ),
-              const Divider(),
-              Padding(
-                padding: Insets.ltr16,
-                child: Text(
-                  'Characters:',
-                  style: context.textTheme.headline6,
-                ),
+            ),
+            const SliverDivider(),
+            SliverContainer(
+              padding: Insets.ltr16,
+              child: Text(
+                'Characters:',
+                style: context.textTheme.headline6,
               ),
-              HorizontalImageList(
+            ),
+            SliverToBoxAdapter(
+              child: HorizontalImageList(
                 items: _film.characters,
                 type: StarWarsType.character,
+                itemTapped: _navigateToCharacterDetails,
               ),
-              const Divider(),
-              Padding(
-                padding: Insets.ltr16,
-                child: Text(
-                  'Species:',
-                  style: context.textTheme.headline6,
-                ),
+            ),
+            const SliverDivider(),
+            SliverContainer(
+              padding: Insets.ltr16,
+              child: Text(
+                'Species:',
+                style: context.textTheme.headline6,
               ),
-              HorizontalImageList(
-                items: _film.planets,
+            ),
+            SliverToBoxAdapter(
+              child: HorizontalImageList(
+                items: _film.characters,
                 type: StarWarsType.species,
               ),
-              const Divider(),
-              Padding(
-                padding: Insets.ltr16,
-                child: Text(
-                  'Starships:',
-                  style: context.textTheme.headline6,
-                ),
+            ),
+            const SliverDivider(),
+            SliverContainer(
+              padding: Insets.ltr16,
+              child: Text(
+                'Starships:',
+                style: context.textTheme.headline6,
               ),
-              HorizontalImageList(
-                items: _film.starships,
+            ),
+            SliverToBoxAdapter(
+              child: HorizontalImageList(
+                items: _film.characters,
                 type: StarWarsType.starship,
               ),
-              const Divider(),
-              Padding(
-                padding: Insets.ltr16,
-                child: Text(
-                  'Planets:',
-                  style: context.textTheme.headline6,
-                ),
+            ),
+            const SliverDivider(),
+            SliverContainer(
+              padding: Insets.ltr16,
+              child: Text(
+                'Planets:',
+                style: context.textTheme.headline6,
               ),
-              HorizontalImageList(
-                items: _film.planets,
+            ),
+            SliverToBoxAdapter(
+              child: HorizontalImageList(
+                items: _film.characters,
                 type: StarWarsType.planets,
               ),
-              Spacing.height40,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(),
-  //     extendBodyBehindAppBar: true,
-  //     body: Stack(
-  //       children: [
-  //         HeaderBackgroundImageWidget(
-  //           scrollController: _scrollController,
-  //           imageUrl: _imageUrl,
-  //         ),
-  //         SingleChildScrollView(
-  //           controller: _scrollController,
-  //           physics: const ClampingScrollPhysics(),
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               _openingCrawl(),
-  //               _content(context),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Flexible _content(BuildContext context) {
-    return Flexible(
-      child: BottomContainer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              widget.film.title,
-              style: context.textTheme.headline4?.copyWith(color: ThemeColors.yellow),
             ),
-            const Divider(),
-            DescriptionItem(
-              label: 'Director:',
-              value: widget.film.director,
-            ),
-            Spacing.height4,
-            DescriptionItem(
-              label: 'Producer:',
-              value: widget.film.producer,
-            ),
-            Spacing.height4,
-            DescriptionItem(
-              label: 'Release date:',
-              value: DateFormat.yMd().format(widget.film.releaseDate),
-            ),
-            const Divider(),
-            Text(
-              'Starships:',
-              style: context.textTheme.headline6,
-            ),
-            HorizontalImageList(
-              items: widget.film.starships,
-              type: StarWarsType.starship,
-            ),
-            const Divider(),
-            Text(
-              'Characters:',
-              style: context.textTheme.headline6,
-            ),
-            HorizontalImageList(
-              items: widget.film.characters,
-              type: StarWarsType.character,
-              itemTapped: (characterId) => _navigateToCharacterDetails(characterId),
-            ),
-            const Divider(),
-            Text(
-              'Planets:',
-              style: context.textTheme.headline6,
-            ),
-            HorizontalImageList(
-              items: widget.film.planets,
-              type: StarWarsType.planets,
-            ),
-            const Divider(),
-            Text(
-              'Species:',
-              style: context.textTheme.headline6,
-            ),
-            HorizontalImageList(
-              items: widget.film.species,
-              type: StarWarsType.species,
+            const SizedSliver(
+              height: 120,
             ),
           ],
         ),
