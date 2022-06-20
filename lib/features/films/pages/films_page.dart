@@ -21,11 +21,12 @@ class FilmsPage extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             DefaultAppBar(
+              expandedHeight: 180,
               title: Text.rich(
                 const TextSpan(
                   children: [
                     TextSpan(text: 'STAR', style: TextStyle(fontWeight: FontWeight.w900)),
-                    TextSpan(text: 'WARS', style: TextStyle(fontWeight: FontWeight.w100)),
+                    TextSpan(text: 'WARS', style: TextStyle(fontWeight: FontWeight.w200)),
                   ],
                 ),
                 style: context.theme.textTheme.headline5,

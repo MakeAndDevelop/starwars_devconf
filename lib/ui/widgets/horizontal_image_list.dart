@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../common/enums/star_wars_entity.dart';
 import '../../features/characters/character_page.dart';
 import '../ui.dart';
+import 'pages/default_page.dart';
 
 class HorizontalImageList extends StatelessWidget {
   const HorizontalImageList({
@@ -113,20 +114,9 @@ class HorizontalListItem extends StatelessWidget {
           switch (type) {
             case StarWarsType.character:
               return CharacterPage(characterId: item);
-            case StarWarsType.starship:
-              // TODO: Handle this case.
-              break;
-            case StarWarsType.species:
-              // TODO: Handle this case.
-              break;
-            case StarWarsType.planets:
-              // TODO: Handle this case.
-              break;
-            case StarWarsType.film:
-              // TODO: Handle this case.
-              break;
+            default:
+              return DefaultPage(itemId: item, type: type);
           }
-          return SizedBox();
         },
       ),
     );

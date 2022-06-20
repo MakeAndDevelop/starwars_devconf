@@ -16,8 +16,7 @@ class CharacterDataSource {
   CharacterDataSource(this._mapper, this._httpClient);
 
   Future<Character?> getCharacter(String id) async {
-    await _httpClient.addCaching();
-    final response = await _httpClient.get<Map<String, dynamic>>('${Endpoints.characters}/$id');
+    final response = await _httpClient.get<Map<String, dynamic>>('${Endpoints.characters}/$id/');
 
     if (response.success && response.data != null) {
       final characterDto = CharacterDto.fromJson(response.data!);

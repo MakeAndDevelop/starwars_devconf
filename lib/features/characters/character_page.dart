@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:starwars_devconf/features/films/pages/description_item.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../common/enums/star_wars_entity.dart';
-import '../../ui/theme/spacing.dart';
+import '../../common/utils/state_comparer.dart';
 import '../../ui/ui.dart';
-import '../../ui/widgets/slivers/sized_sliver.dart';
-import '../../ui/widgets/ui_components/containers/body_container.dart';
 import 'bloc/bloc.dart';
 import 'models/character.dart';
-import 'widgets/character_header_image.dart';
 
 class CharacterPage extends StatefulWidget {
   final String characterId;
@@ -33,122 +30,95 @@ class _CharacterPageState extends State<CharacterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BodyContainer(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              title: Text(
-                '',
-                style: const TextStyle(color: ThemeColors.textColor),
-              ),
-            ),
-            const SizedSliver(height: 40),
-            SliverToBoxAdapter(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 440,
-                    child: Card(
-                      margin: Insets.zero,
-                      elevation: 2,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: ThemeConstants.mainItemRadius,
-                        side: BorderSide(color: ThemeColors.borderColor),
-                      ),
-                      child: Image.network(
-                        ImageUtility.character(widget.characterId),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.centerRight,
-                      ),
-                    ),
+        child: BlocBuilder<CharacterCubit, CharacterState>(
+          buildWhen: defaultBlocCondition<CharacterState>(),
+          builder: (_, state) {
+            final title = state is CharacterLoadedState ? state.character.name : '';
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  title: Text(
+                    title,
+                    style: const TextStyle(color: ThemeColors.textColor),
                   ),
-                  Expanded(
-                    child: Center(
-                      child: RotatedBox(
-                        quarterTurns: -1,
-                        child: Container(
-                          padding: Insets.horizontal16,
-                          width: 440,
-                          child: Text(
-                            '',
-                            softWrap: false,
-                            overflow: TextOverflow.visible,
-                            style: context.textTheme.headline6?.copyWith(
-                              color: ThemeColors.secondaryTextColor.withOpacity(0.6),
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
+                ),
+                const SizedSliver(height: 40),
+                SliverToBoxAdapter(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MainImage(imageUrl: ImageUtility.imageFor(widget.characterId, StarWarsType.character)),
+                      Expanded(
+                        child: VerticalHeadline(title: title),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+                SliverAnimatedSwitcher(
+                  duration: AnimationConstants.animationDuration,
+                  child: _body(state),
+                ),
+                const SizedSliver(height: 40),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _body(CharacterLoadedState state) {
-    return Stack(
+  Widget _body(CharacterState state) {
+    if (state is CharacterLoadedState) {
+      return CharacterPageBody(character: state.character);
+    }
+    return const SliverLoadingIndicator();
+  }
+}
+
+class CharacterPageBody extends StatelessWidget {
+  final Character character;
+
+  const CharacterPageBody({Key? key, required this.character}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiSliver(
       children: [
-        HeaderBackgroundImageWidget(
-          scrollController: _scrollController,
-          imageUrl: ImageUtility.character(state.character.id),
+        CharacterDetails(
+          character: character,
         ),
-        FillRemainingScrollView(
-          scrollController: _scrollController,
-          child: Column(
-            children: <Widget>[
-              CharacterHeaderImage(
-                imageUrl: ImageUtility.character(state.character.id),
-              ),
-              Expanded(
-                child: BottomContainer(
-                  height: 800,
-                  child: _content(state.character),
-                ),
-              ),
-            ],
-          ),
-        ),
+        RelatedItemsSliver(title: 'Films:', type: StarWarsType.film, items: character.films),
+        RelatedItemsSliver(title: 'Starships:', type: StarWarsType.starship, items: character.starships),
+        RelatedItemsSliver(title: 'Vehicles:', type: StarWarsType.starship, items: character.vehicles),
       ],
     );
   }
+}
 
-  Widget _content(Character character) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          character.name,
-          style: context.theme.textTheme.headline4,
-        ),
-        const Divider(),
-        DescriptionItem(
-          label: 'Hair color',
-          value: character.hairColor,
-        ),
-        Spacing.height8,
-        const Divider(),
-        Text(
-          'Films:',
-          style: context.textTheme.headline6,
-        ),
-        HorizontalImageList(
-          items: character.films,
-          type: StarWarsType.film,
-        ),
-      ],
-    );
-  }
+class CharacterDetails extends StatelessWidget {
+  const CharacterDetails({
+    Key? key,
+    required this.character,
+  }) : super(key: key);
 
-  Center _characterNotFound() {
-    return const Center(
-      child: Text('Character not found! :('),
+  final Character character;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverContainer(
+      padding: const EdgeInsets.symmetric(
+        vertical: Insets.inset16,
+        horizontal: Insets.inset12,
+      ),
+      child: Wrap(
+        children: [
+          LabelBox(label: 'Birth year:', value: character.birthYear),
+          LabelBox(label: 'Height:', value: character.height),
+          LabelBox(label: 'Mass:', value: character.mass),
+          LabelBox(label: 'Hair color:', value: character.hairColor),
+          LabelBox(label: 'Eye color:', value: character.eyeColor),
+        ],
+      ),
     );
   }
 }

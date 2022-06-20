@@ -15,7 +15,6 @@ class FilmDataSource {
   FilmDataSource(this._mapper, this._httpClient);
 
   Future<List<Film>?> getFilms() async {
-    await _httpClient.addCaching();
     final response = await _httpClient.get<Map<String, dynamic>>(Endpoints.films);
 
     if (response.success && response.data != null) {

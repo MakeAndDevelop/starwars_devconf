@@ -23,6 +23,10 @@ class ImageUtility {
     return '$_urlPrefix/species/$speciesId.jpg';
   }
 
+  static String vehicle(String speciesId) {
+    return '$_urlPrefix/vehicle/$speciesId.jpg';
+  }
+
   static String imageFor(String id, StarWarsType type) {
     switch (type) {
       case StarWarsType.film:
@@ -35,6 +39,8 @@ class ImageUtility {
         return species(id);
       case StarWarsType.planets:
         return planets(id);
+      case StarWarsType.vehicle:
+        return vehicle(id);
     }
   }
 }

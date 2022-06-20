@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -7,16 +8,18 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'bloc_providers.dart';
+import 'common/network/dio_extensions.dart';
 import 'features/films/pages/films_page.dart';
 import 'ioc.dart';
 import 'ui/theme/theme.dart';
 
-void main() {
+Future main() async {
   configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
   Intl.defaultLocale = 'en_US';
   initializeDateFormatting(Intl.defaultLocale);
   _androidEnforceFrameRate();
+  await iocContainer.get<Dio>().addCaching();
   runApp(const StarWarsApp());
 }
 
