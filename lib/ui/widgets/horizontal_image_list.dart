@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../../common/enums/star_wars_entity.dart';
 import '../../features/characters/character_page.dart';
 import '../ui.dart';
-import 'pages/default_page.dart';
 
 class HorizontalImageList extends StatelessWidget {
   const HorizontalImageList({

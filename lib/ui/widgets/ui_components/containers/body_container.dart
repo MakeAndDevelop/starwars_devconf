@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../generated/assets.dart';
 import '../../../ui.dart';
 
+/// Full screen widget that displays a background image.
 class BodyContainer extends StatelessWidget {
   final Widget child;
 
+  /// Full screen widget that displays a background image.
   const BodyContainer({super.key, required this.child});
 
   @override

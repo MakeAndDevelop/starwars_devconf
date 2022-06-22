@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
 import '../../features.dart';
 
@@ -33,7 +32,7 @@ class FilmListItem extends StatelessWidget {
   }
 }
 
-class FilmListItemBody extends StatefulWidget {
+class FilmListItemBody extends StatelessWidget {
   const FilmListItemBody({
     Key? key,
     required this.film,
@@ -43,16 +42,11 @@ class FilmListItemBody extends StatefulWidget {
   final Film film;
   final void Function() action;
 
-  @override
-  State<FilmListItemBody> createState() => _FilmListItemBodyState();
-}
-
-class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProviderStateMixin {
-  String get _imageUrl => 'https://starwars-visualguide.com/assets/img/films/${widget.film.id}.jpg';
+  String get _imageUrl => 'https://starwars-visualguide.com/assets/img/films/${film.id}.jpg';
 
   @override
   Widget build(BuildContext context) {
-    final releaseDate = DateFormat.yMMM().format(widget.film.releaseDate);
+    final releaseDate = DateFormat.yMMM().format(film.releaseDate);
 
     return Card(
       elevation: 1,
@@ -66,8 +60,8 @@ class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProvider
         child: InkWell(
           borderRadius: ThemeConstants.itemRadius,
           onTap: () {
-            BlocProvider.of<FilmsCubit>(context).selectFilm(widget.film.episodeId);
-            widget.action();
+            BlocProvider.of<FilmsCubit>(context).selectFilm(film.episodeId);
+            action();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -79,7 +73,7 @@ class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProvider
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.film.title,
+                      film.title,
                       style: context.textTheme.headline6,
                     ),
                     Text(releaseDate),
@@ -88,13 +82,13 @@ class _FilmListItemBodyState extends State<FilmListItemBody> with TickerProvider
               ),
               Spacing.width24,
               Image.network(
-                  _imageUrl,
-                  height: 140,
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fitHeight,
-                  color: Colors.brown.withOpacity(0.75),
-                  colorBlendMode: BlendMode.dstIn,
-                ),
+                _imageUrl,
+                height: 140,
+                alignment: Alignment.topCenter,
+                fit: BoxFit.fitHeight,
+                color: Colors.brown.withOpacity(0.75),
+                colorBlendMode: BlendMode.dstIn,
+              ),
             ],
           ),
         ),

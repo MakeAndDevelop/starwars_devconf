@@ -1,14 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common/utils/state_comparer.dart';
-import '../../../ui/theme/spacing.dart';
 import '../../../ui/ui.dart';
-import '../../../ui/widgets/slivers/default_app_bar.dart';
-import '../../../ui/widgets/ui_components/containers/body_container.dart';
 import '../../features.dart';
 
 class FilmsPage extends StatelessWidget {

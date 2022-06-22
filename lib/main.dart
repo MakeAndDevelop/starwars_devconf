@@ -30,9 +30,7 @@ Future<void> _androidEnforceFrameRate() async {
 
   try {
     await FlutterDisplayMode.setHighRefreshRate();
-  } on Exception {
-    // TODO
-  }
+  } on Exception {}
 }
 
 class StarWarsApp extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -31,15 +30,22 @@ class FilmDetailsPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MainImage(imageUrl: _imageUrl),
+                  Semantics(
+                    label: 'Image of ${_film.title}',
+                    child: MainImage(imageUrl: _imageUrl),
+                  ),
                   Expanded(
                     child: VerticalHeadline(title: _film.title),
                   ),
                 ],
               ),
             ),
-            FilmDetails(film: _film),
-            OpeningCrawlSliver(film: _film),
+            FilmDetails(
+              film: _film,
+            ),
+            OpeningCrawlSliver(
+              film: _film,
+            ),
             const SliverDivider(),
             RelatedItemsSliver(
               title: 'Characters:',
