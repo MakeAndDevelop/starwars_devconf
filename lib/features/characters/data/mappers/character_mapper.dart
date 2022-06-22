@@ -19,7 +19,7 @@ class CharacterMapper implements Mapper<CharacterDto, Character> {
         eyeColor: source.eyeColor,
         birthYear: source.birthYear,
         gender: source.gender,
-        homeworld: source.homeworld,
+        homeworld: source.homeWorld,
         films: _mapToIds(source.films, Endpoints.films),
         species: _mapToIds(source.species, Endpoints.species),
         vehicles: _mapToIds(source.vehicles, Endpoints.vehicles),

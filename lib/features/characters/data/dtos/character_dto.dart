@@ -13,7 +13,7 @@ class CharacterDto {
     required this.eyeColor,
     required this.birthYear,
     required this.gender,
-    required this.homeworld,
+    required this.homeWorld,
     required this.films,
     required this.species,
     required this.vehicles,
@@ -40,7 +40,7 @@ class CharacterDto {
   final String birthYear;
 
   final String gender;
-  final String homeworld;
+  final String homeWorld;
   final List<String> films;
   final List<String> species;
   final List<String> vehicles;

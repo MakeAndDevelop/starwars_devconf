@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -29,6 +28,7 @@ class FilmsPage extends StatelessWidget {
               ),
             ),
             SliverSpacing.height16,
+            // #DeclarativeUI - BlocBuilder<FilmsCubit, FilmsState>
             BlocBuilder<FilmsCubit, FilmsState>(
               buildWhen: defaultBlocCondition<FilmsState>(),
               builder: (context, state) {
