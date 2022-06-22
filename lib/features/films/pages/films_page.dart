@@ -34,7 +34,11 @@ class FilmsPage extends StatelessWidget {
               builder: (context, state) {
                 return SliverAnimatedSwitcher(
                   duration: const Duration(milliseconds: 600),
-                  child: state is FilmsLoadedState ? _body(state) : const SliverToBoxAdapter(child: LoadingIndicator()),
+                  child: state is FilmsLoadedState
+                      ? _body(state)
+                      : const SliverToBoxAdapter(
+                          child: LoadingIndicator(),
+                        ),
                 );
               },
             ),

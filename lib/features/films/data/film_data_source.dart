@@ -22,7 +22,8 @@ class FilmDataSource {
           .map(
             (source) => _mapper.mapToDestination(source),
           )
-          .toList();
+          .toList()
+        ..sort((a, b) => a.episodeId.compareTo(b.episodeId));
     }
 
     return null;

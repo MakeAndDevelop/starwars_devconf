@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'character_dto.g.dart';
 
+// #CodeGeneration
 @JsonSerializable()
 class CharacterDto {
   CharacterDto({
@@ -13,7 +14,7 @@ class CharacterDto {
     required this.eyeColor,
     required this.birthYear,
     required this.gender,
-    required this.homeWorld,
+    required this.homeworld,
     required this.films,
     required this.species,
     required this.vehicles,
@@ -40,7 +41,7 @@ class CharacterDto {
   final String birthYear;
 
   final String gender;
-  final String homeWorld;
+  final String homeworld;
   final List<String> films;
   final List<String> species;
   final List<String> vehicles;

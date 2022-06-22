@@ -4,6 +4,7 @@ import 'film_dto.dart';
 
 part 'film_response.g.dart';
 
+// #CodeGeneration
 @JsonSerializable()
 class FilmResponse {
   final int count;

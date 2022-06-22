@@ -31,6 +31,7 @@ class FilmDto {
   final DateTime edited;
   final String url;
 
+  // #NoReflection
   factory FilmDto.fromJson(Map<String, dynamic> json) => FilmDto(
         title: json['title'] as String,
         episodeId: json['episode_id'] as int,

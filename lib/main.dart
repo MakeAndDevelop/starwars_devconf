@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,7 +17,7 @@ Future main() async {
   Intl.defaultLocale = 'en_US';
   initializeDateFormatting(Intl.defaultLocale);
   await iocContainer.get<Dio>().addCaching();
-  runApp(const StarWarsApp());
+  runApp(const StarWarsAppCupertino());
 }
 
 class StarWarsApp extends StatelessWidget {
@@ -26,11 +27,28 @@ class StarWarsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: BlocProviders.globalProviders,
+      // #PlatformWidgets material
       child: MaterialApp(
         title: 'Star Wars Demo',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         home: const FilmsPage(),
+      ),
+    );
+  }
+}
+
+class StarWarsAppCupertino extends StatelessWidget {
+  const StarWarsAppCupertino({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: BlocProviders.globalProviders,
+      // #PlatformWidgets cupertinof
+      child: const CupertinoApp(
+        title: 'Star Wars Demo',
+        home: FilmsPage(),
       ),
     );
   }
