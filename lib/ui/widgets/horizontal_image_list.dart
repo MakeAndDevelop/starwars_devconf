@@ -1,7 +1,11 @@
+import 'dart:ui';
+
+import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/enums/star_wars_entity.dart';
+import '../../features/characters/character_page.dart';
 import '../ui.dart';
 
 class HorizontalImageList extends StatelessWidget {
@@ -18,45 +22,101 @@ class HorizontalImageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: Insets.inset16,
+      ),
       child: SizedBox(
-        height: 100,
+        height: 140,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: items.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: Insets.all8,
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shape: const CircleBorder(
-                  side: BorderSide(color: ThemeColors.yellow),
-                ),
-                child: Material(
-                  child: InkWell(
-                    onTap: () => itemTapped?.call(items[index]),
-                    child: CachedNetworkImage(
-                      imageUrl: ImageUtility.imageFor(items[index], type),
-                      placeholder: (context, url) => Container(
-                        color: ThemeColors.black,
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: ThemeColors.black,
-                        child: const Icon(
-                          Icons.blur_off,
-                          color: ThemeColors.yellow,
-                        ),
-                      ),
-                      height: 64,
-                      width: 64,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
+            return HorizontalListItem(
+              type: type,
+              item: items[index],
+              padding: index == 0
+                  ? Insets.firstListItem16
+                  : index == items.length - 1
+                      ? Insets.lastListItem16
+                      : Insets.horizontal8,
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class HorizontalListItem extends StatelessWidget {
+  final String item;
+  final StarWarsType type;
+  final EdgeInsets padding;
+
+  const HorizontalListItem({
+    Key? key,
+    required this.type,
+    required this.item,
+    required this.padding,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: OpenContainer(
+        closedColor: Colors.transparent,
+        closedShape: const RoundedRectangleBorder(
+          borderRadius: ThemeConstants.smallItemRadius,
+          side: BorderSide(color: ThemeColors.solidBorderColor),
+        ),
+        closedBuilder: (context, action) {
+          return Card(
+            clipBehavior: Clip.antiAlias,
+            shape: const RoundedRectangleBorder(
+              borderRadius: ThemeConstants.smallItemRadius,
+              side: BorderSide(color: ThemeColors.solidBorderColor),
+            ),
+            elevation: 2,
+            child: InkWell(
+              onTap: action,
+              child: CachedNetworkImage(
+                imageUrl: ImageUtility.imageFor(item, type),
+                placeholder: (context, url) => ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                    child: Container(
+                      color: ThemeColors.overlayColor,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                    child: Container(
+                      color: ThemeColors.overlayColor,
+                      child: const Icon(
+                        Icons.blur_off,
+                        color: ThemeColors.textColor,
+                      ),
+                    ),
+                  ),
+                ),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+                width: 130,
+              ),
+            ),
+          );
+        },
+        openBuilder: (BuildContext context, void Function({Object? returnValue}) action) {
+          switch (type) {
+            case StarWarsType.character:
+              return CharacterPage(characterId: item);
+            default:
+              return DefaultPage(itemId: item, type: type);
+          }
+        },
       ),
     );
   }

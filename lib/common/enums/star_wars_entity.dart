@@ -4,4 +4,5 @@ enum StarWarsType {
   starship,
   species,
   planets,
+  vehicle,
 }

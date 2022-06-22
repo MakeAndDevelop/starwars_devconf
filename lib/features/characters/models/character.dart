@@ -29,7 +29,7 @@ class Character {
   final String gender;
   final String homeworld;
   final List<String> films;
-  final List<dynamic> species;
+  final List<String> species;
   final List<String> vehicles;
   final List<String> starships;
   final DateTime created;

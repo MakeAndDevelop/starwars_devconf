@@ -13,7 +13,7 @@
             "name": "Android",
             "request": "launch",
             "type": "dart",
-            "deviceId": "192.168.10.61:5555"
+            "deviceId": "RFCRB06ZLDX"
         },
         {
             "name": "MacOS",
@@ -25,7 +25,7 @@
             "name": "iPhone",
             "request": "launch",
             "type": "dart",
-            "deviceId": "2875D493-08EA-4AEC-B6EF-4D8E4A662239"
+            "deviceId": "E4E63C76-1F25-4F69-A090-A86786C60A60"
         },
         {
             "name": "starwars_devconf",
@@ -48,6 +48,14 @@
     "compounds": [
         {
             "name": "All Devices",
+            "configurations": [
+                "Android",
+                "iPhone",
+                "MacOS"
+            ],
+        },
+        {
+            "name": "Mobile Devices",
             "configurations": [
                 "Android",
                 "iPhone"
