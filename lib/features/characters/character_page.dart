@@ -18,8 +18,6 @@ class CharacterPage extends StatefulWidget {
 }
 
 class _CharacterPageState extends State<CharacterPage> {
-  final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();

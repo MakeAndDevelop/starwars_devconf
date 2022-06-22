@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 
@@ -42,7 +43,7 @@ class SwapiInterceptor extends Interceptor {
 
       return handler.next(options);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return handler.next(options);
     }
   }

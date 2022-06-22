@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -18,19 +15,8 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Intl.defaultLocale = 'en_US';
   initializeDateFormatting(Intl.defaultLocale);
-  _androidEnforceFrameRate();
   await iocContainer.get<Dio>().addCaching();
   runApp(const StarWarsApp());
-}
-
-Future<void> _androidEnforceFrameRate() async {
-  if (!Platform.isAndroid) {
-    return;
-  }
-
-  try {
-    await FlutterDisplayMode.setHighRefreshRate();
-  } on Exception {}
 }
 
 class StarWarsApp extends StatelessWidget {
