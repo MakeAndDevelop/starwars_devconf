@@ -7,17 +7,21 @@ class MainActivity: FlutterActivity() {
     /// Configure flutter engine
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
             // This method is invoked on the main thread.
             call, result ->
             if (call.method == "getBatteryLevel") {
               val batteryLevel = getBatteryLevel()
-              result.success(batteryLevel)
+      
+              if (batteryLevel != -1) {
+                result.success(batteryLevel)
+              } else {
+                result.error("UNAVAILABLE", "Battery level not available.", null)
+              }
             } else {
               result.notImplemented()
             }
-        }
+          }
       }
 
       private fun getBatteryLevel(): Int {
