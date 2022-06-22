@@ -23,10 +23,13 @@ class FilmListItem extends StatelessWidget {
         closedElevation: 0,
         openElevation: 0,
         transitionDuration: const Duration(milliseconds: 600),
-        closedBuilder: (context, action) => FilmListItemBody(film: film, action: action),
-        openBuilder: (context, action) {
-          return FilmDetailsPage(film: film);
-        },
+        closedBuilder: (context, action) => FilmListItemBody(
+          film: film,
+          action: action,
+        ),
+        openBuilder: (context, action) => FilmDetailsPage(
+          film: film,
+        ),
       ),
     );
   }

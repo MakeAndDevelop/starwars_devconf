@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../common/enums/star_wars_entity.dart';
@@ -10,8 +9,8 @@ class FilmDetailsPage extends StatelessWidget {
 
   const FilmDetailsPage({Key? key, required this.film}) : super(key: key);
 
+  // Underscore indicates that this is a private member.
   String get _imageUrl => ImageUtility.film(film.id);
-  Film get _film => film;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class FilmDetailsPage extends StatelessWidget {
           slivers: [
             SliverAppBar(
               title: Text(
-                _film.title,
+                film.title,
                 style: const TextStyle(color: ThemeColors.textColor),
               ),
             ),
@@ -31,45 +30,53 @@ class FilmDetailsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Semantics(
-                    label: 'Image of ${_film.title}',
+                    label: 'Image of ${film.title}',
                     child: MainImage(imageUrl: _imageUrl),
                   ),
                   Expanded(
-                    child: VerticalHeadline(title: _film.title),
+                    child: VerticalHeadline(title: film.title),
                   ),
                 ],
               ),
             ),
-            FilmDetails(
-              film: _film,
+            FilmDetailsSliver(
+              film: film,
             ),
             OpeningCrawlSliver(
-              film: _film,
+              film: film,
             ),
             const SliverDivider(),
             RelatedItemsSliver(
               title: 'Characters:',
               type: StarWarsType.character,
-              items: _film.characters,
+              items: film.characters,
             ),
             const SliverDivider(),
             RelatedItemsSliver(
               title: 'Species:',
               type: StarWarsType.species,
-              items: _film.species,
+              items: film.species,
             ),
             const SliverDivider(),
             RelatedItemsSliver(
               title: 'Star ships:',
               type: StarWarsType.starship,
-              items: _film.starships,
+              items: film.starships,
             ),
             const SliverDivider(),
             RelatedItemsSliver(
               title: 'Planets:',
               type: StarWarsType.planets,
-              items: _film.planets,
+              items: film.planets,
             ),
+            if (film.episodeId >= 4) ...[
+              const SliverDivider(),
+              RelatedItemsSliver(
+                title: 'Vehicles:',
+                type: StarWarsType.vehicle,
+                items: film.vehicles,
+              ),
+            ],
             const SizedSliver(
               height: 120,
             ),

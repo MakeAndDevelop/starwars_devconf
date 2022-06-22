@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import '../../../ui/ui.dart';
 import '../../features.dart';
 
-class FilmDetails extends StatelessWidget {
-  const FilmDetails({
+class FilmDetailsSliver extends StatelessWidget {
+  const FilmDetailsSliver({
     Key? key,
     required Film film,
   })  : _film = film,

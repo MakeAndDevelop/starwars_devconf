@@ -42,7 +42,9 @@ class _OpeningCrawlSliverState extends State<OpeningCrawlSliver> {
             padding: Insets.horizontal16,
             alignment: Alignment.centerLeft,
             child: TextButton(
-              onPressed: () => setState(() => _showOpeningCrawl = !_showOpeningCrawl),
+              onPressed: () => setState(
+                () => _showOpeningCrawl = !_showOpeningCrawl,
+              ),
               child: Row(
                 children: [
                   AnimatedRotation(

@@ -17,7 +17,7 @@ Future main() async {
   Intl.defaultLocale = 'en_US';
   initializeDateFormatting(Intl.defaultLocale);
   await iocContainer.get<Dio>().addCaching();
-  runApp(const StarWarsAppCupertino());
+  runApp(const StarWarsApp());
 }
 
 class StarWarsApp extends StatelessWidget {

@@ -26,41 +26,39 @@ class _CharacterPageState extends State<CharacterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BodyContainer(
-        child: BlocBuilder<CharacterCubit, CharacterState>(
-          buildWhen: defaultBlocCondition<CharacterState>(),
-          builder: (_, state) {
-            final title = state is CharacterLoadedState ? state.character.name : '';
-            return CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  title: Text(
-                    title,
-                    style: const TextStyle(color: ThemeColors.textColor),
-                  ),
+    return BodyContainer(
+      child: BlocBuilder<CharacterCubit, CharacterState>(
+        buildWhen: defaultBlocCondition<CharacterState>(),
+        builder: (_, state) {
+          final title = state is CharacterLoadedState ? state.character.name : '';
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                title: Text(
+                  title,
+                  style: const TextStyle(color: ThemeColors.textColor),
                 ),
-                const SizedSliver(height: 40),
-                SliverToBoxAdapter(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MainImage(imageUrl: ImageUtility.imageFor(widget.characterId, StarWarsType.character)),
-                      Expanded(
-                        child: VerticalHeadline(title: title),
-                      ),
-                    ],
-                  ),
+              ),
+              const SizedSliver(height: 40),
+              SliverToBoxAdapter(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MainImage(imageUrl: ImageUtility.imageFor(widget.characterId, StarWarsType.character)),
+                    Expanded(
+                      child: VerticalHeadline(title: title),
+                    ),
+                  ],
                 ),
-                SliverAnimatedSwitcher(
-                  duration: AnimationConstants.animationDuration,
-                  child: _body(state),
-                ),
-                const SizedSliver(height: 40),
-              ],
-            );
-          },
-        ),
+              ),
+              SliverAnimatedSwitcher(
+                duration: AnimationConstants.animationDuration,
+                child: _body(state),
+              ),
+              const SizedSliver(height: 40),
+            ],
+          );
+        },
       ),
     );
   }
@@ -110,11 +108,12 @@ class CharacterDetails extends StatelessWidget {
       ),
       child: Wrap(
         children: [
-          LabelBox(label: 'Birth year:', value: character.birthYear),
+          LabelBox(label: 'Name:', value: character.name),
           LabelBox(label: 'Height:', value: character.height),
           LabelBox(label: 'Mass:', value: character.mass),
           LabelBox(label: 'Hair color:', value: character.hairColor),
           LabelBox(label: 'Eye color:', value: character.eyeColor),
+          LabelBox(label: 'Birth year:', value: character.birthYear),
         ],
       ),
     );
