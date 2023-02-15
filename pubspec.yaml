@@ -12,26 +12,26 @@ dependencies:
 
   # Core Architectural packages
   get_it: ^7.2.0 # Dependency injection
-  injectable: ^1.5.3 # Dependency injection annotation
-  flutter_bloc: ^8.0.1 # Bloc library
+  injectable: ^2.1.0 # Dependency injection annotation
+  flutter_bloc: ^8.1.2 # Bloc library
   equatable: ^2.0.3 # Equatable used for easy overriding equality
 
   # Serialization
-  json_annotation: ^4.5.0 # json
+  json_annotation: ^4.8.0 # json
 
   # Http
   dio: ^4.0.6
-  dio_cache_interceptor: ^3.2.7
-  dio_cache_interceptor_hive_store: ^3.1.1
-  path_provider: ^2.0.10
+  dio_cache_interceptor: ^3.3.1
+  dio_cache_interceptor_hive_store: ^3.2.0
+  path_provider: ^2.0.12
 
   # Localization
   intl: ^0.17.0
 
   # UI
-  cached_network_image: ^3.2.1
-  animations: ^2.0.3 # animations
-  sliver_tools: ^0.2.6 # Additional Sliver tools, used in product detail screen
+  cached_network_image: ^3.2.3
+  animations: ^2.0.7 # animations
+  sliver_tools: ^0.2.9 # Additional Sliver tools, used in product detail screen
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -42,11 +42,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^2.1.11 # Build runner for code generation
+  build_runner: ^2.3.3 # Build runner for code generation
 
   # Json serializable
-  json_serializable: ^6.2.0 # Used to generate json (de)serializer code
-  injectable_generator: ^1.5.3 # Used to generate DI boilerplate
+  json_serializable: ^6.6.1 # Used to generate json (de)serializer code
+  injectable_generator: ^2.1.4 # Used to generate DI boilerplate
 
   # Linting
   flutter_lints: ^2.0.1
