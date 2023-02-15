@@ -26,10 +26,10 @@ class FilmDetailsSliver extends StatelessWidget {
             label: 'Release date:',
             value: DateFormat.yMd().format(_film.releaseDate),
           ),
-          LabelBox(
-            label: 'Director:',
-            value: _film.director,
-          ),
+          // LabelBox(
+          //   label: 'Director:',
+          //   value: _film.director,
+          // ),
           LabelBox(
             label: 'Episode:',
             value: _film.episodeId.toString(),
