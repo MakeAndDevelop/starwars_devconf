@@ -108,12 +108,18 @@ class CharacterDetails extends StatelessWidget {
       ),
       child: Wrap(
         children: [
-          LabelBox(label: 'Name:', value: character.name),
-          LabelBox(label: 'Height:', value: character.height),
-          LabelBox(label: 'Mass:', value: character.mass),
-          LabelBox(label: 'Hair color:', value: character.hairColor),
-          LabelBox(label: 'Eye color:', value: character.eyeColor),
-          LabelBox(label: 'Birth year:', value: character.birthYear),
+          LabelBox(
+            label: 'Height:',
+            value: character.height,
+          ),
+          LabelBox(
+            label: 'Mass:',
+            value: character.mass,
+          ),
+          LabelBox(
+            label: 'Hair color:',
+            value: character.hairColor,
+          ),
         ],
       ),
     );

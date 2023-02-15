@@ -27,7 +27,6 @@ class StarWarsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: BlocProviders.globalProviders,
-      // #PlatformWidgets material
       child: MaterialApp(
         title: 'Star Wars Demo',
         theme: AppTheme.lightTheme,
@@ -45,7 +44,6 @@ class StarWarsAppCupertino extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: BlocProviders.globalProviders,
-      // #PlatformWidgets cupertinof
       child: const CupertinoApp(
         title: 'Star Wars Demo',
         home: FilmsPage(),
